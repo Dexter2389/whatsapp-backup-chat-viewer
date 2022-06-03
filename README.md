@@ -2,20 +2,20 @@
 
 <!-- Add `badges` here-->
 
-A Project to extract Whatsapp conversations from the app's SQLite database and exporting them as HTML or TXT files.
+A Project to extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files.
 
 <!-- Add TXT Output -->
 
-<!-- Add HTML Output -->
+<!-- Add JSON Output -->
 
 ### Motivation
 
-Recently I lost my phone and as any normal person, my whatsapp contained lots of data that I wasn't willing to let go and I had to find a way to get this data back. So I somehow (tbh not somehow, there are a lot of people who have shared how to fetch that) was able to get the whatsapp's SQLite database from my google backup. But having just the database doesn't help me much so I decided to create a parser for the database and export in chat format as HTML.
+Recently I lost my phone and as any normal person, my whatsapp contained lots of data that I wasn't willing to let go and I had to find a way to get this data back. So I somehow (tbh not somehow, there are a lot of people who have shared how to fetch that) was able to get the whatsapp's SQLite database from my google backup. But having just the database doesn't help me much so I decided to create a parser for the database and export in chat format as JSON.
 
 ### Features
 
 - Export the chats to txt files (one per chat).
-<!-- - Export the chats to a WhatsApp Web like HTML page. -->
+<!-- - Export the chats to JSON file. -->
 
 ## Usage
 
@@ -25,13 +25,13 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
   - msgstore.db
   - wa.db
 
-<!-- ### Quickstart:
+### Quickstart:
 
 - Run the following script:
 
 ```shell
-$ python main.py --msgdb="path_to_msgstore.db" --wadb="path_to_wa.db" --output="txt_formatted"
-``` -->
+$ python main.py -mdb msgstore.db -wdb wa.db -o output
+```
 
 <!-- ## Retrieving WhatsApp Databases
 

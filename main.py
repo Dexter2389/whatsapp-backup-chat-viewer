@@ -17,7 +17,7 @@ def close_db_connections(databases):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(
-        description="Project to extract Whatsapp conversations from the app's SQLite database and exporting them as HTML or TXT files."
+        description="Project to extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files."
     )
     ap.add_argument(
         "--msgdb", "-mdb", type=str, required=True, help="Path to 'msgstore.db' file"
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     ap.add_argument(
         "--chat_output_style",
         "-f",
-        choices=["raw", "formatted", "html"],
+        choices=["raw_txt", "formatted_txt", "json"],
         type=str,
         default="formatted",
         help="Style in which your parsed messages will be stored",
@@ -85,7 +85,7 @@ if __name__ == "__main__":
                     chat=chat,
                     dir=args.parsed_chat_output_dir,
                 )
-    elif args.chat_output_style == "html":
+    elif args.chat_output_style == "json":
         close_db_connections([msgdb, wadb])
         raise NotImplementedError
     else:

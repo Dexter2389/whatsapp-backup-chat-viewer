@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "whatsapp-backup-chat-viewer"
 version = "0.0.0"
-description = "Project to extract Whatsapp conversations from the app's SQLite database and exporting them as HTML or TXT files"
+description = "Project to extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files"
 authors = ["Saurabh Ghanekar <ghanekarsaurabh8@gmail.com>"]
 license = "BSD-2-Clause"
 readme = "README.md"
