@@ -42,10 +42,14 @@ def contact_resolver(wadb_cursor, raw_string_jid):
     return res
 
 
-def chat_resolver(msgdb_cursor, chat_row_id):
-    msgdb_query = f"""
-    SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view._id={chat_row_id}
-    """
+def chat_resolver(msgdb_cursor, chat_row_id=None, phone_number=None):
+    if chat_row_id:
+        msgdb_query = f"""SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view._id={chat_row_id}"""
+    elif phone_number:
+        msgdb_query = f"""SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view.raw_string_jid LIKE '%{phone_number}@%'"""
+    else:
+        raise Exception("'chat_row_id' and 'phone_number' both cannot be None")
+
     exec = msgdb_cursor.execute(msgdb_query)
     res_query = exec.fetchone()
     if res_query is None:

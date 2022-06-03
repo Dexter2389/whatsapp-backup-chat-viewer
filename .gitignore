@@ -144,3 +144,4 @@ output/
 wa.db
 msgstore.db
 TODO.md
+test_locally.py
