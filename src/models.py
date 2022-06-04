@@ -1,6 +1,7 @@
-from attrs import define
 from datetime import datetime
 from typing import List, Optional, Union
+
+from attrs import define
 
 
 @define
