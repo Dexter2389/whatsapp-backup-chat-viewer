@@ -79,7 +79,7 @@ def build_chat_for_given_id_or_phone_number(
             raw_string_jid=raw_string_jid, name=dm_or_group.get("name")
         )
 
-    query = f"""SELECT message_view._id FROM 'message_view' WHERE message_view.chat_row_id={chat.get("chat_id")}"""
+    query = f"""SELECT message._id FROM 'message' WHERE message.chat_row_id={chat.get("chat_id")}"""
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:
@@ -104,7 +104,7 @@ def build_all_chats(
     Returns:
         List[Chat]: All the chats in the msgdb database
     """
-    query = "SELECT chat_view._id FROM 'chat_view'"
+    query = "SELECT chat._id FROM 'chat'"
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:

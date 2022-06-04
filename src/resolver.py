@@ -31,22 +31,21 @@ def message_resolver(
         message_row_id (int): ID of the message for which message data is retrieved
 
     Returns:
-        Dict[str, Any]: Dictionary containing 'message_id', 'key_id', 'chat_id', 'from_me', 'raw_string_jid', 'timestamp', 'text_data' and 'key_id' keys.
+        Dict[str, Any]: Dictionary containing 'message_id', 'key_id', 'chat_id', 'from_me', 'raw_string_jid', 'timestamp', 'text_data' and 'message_quoted.key_id' keys.
         str: 'jid' of the person who sent the message
     """
     query = f"""
-    SELECT message_view._id as message_id, message_view.key_id, message_view.chat_row_id as chat_id, message_view.from_me, (CASE WHEN jid.raw_string IS NULL THEN chat_view.raw_string_jid ELSE jid.raw_string END) as raw_string_jid, (CASE WHEN message_view.received_timestamp=0 THEN message_view.timestamp ELSE message_view.received_timestamp END) as timestamp, message_view.text_data, message_quoted.key_id as reply_to
-    FROM 'message_view'
-    LEFT JOIN 'message_quoted' ON message_view._id=message_quoted.message_row_id
-    LEFT JOIN 'jid' ON message_view.sender_jid_row_id=jid._id
-    JOIN 'chat_view' ON message_view.chat_row_id=chat_view._id
-    WHERE message_view._id={message_row_id}
+    SELECT message._id as message_id, message.key_id, message.chat_row_id as chat_id, message.from_me, jid.raw_string as raw_string_jid, (CASE WHEN message.received_timestamp=0 THEN message.timestamp ELSE message.received_timestamp END) as timestamp, message.text_data, message_quoted.key_id as reply_to
+    FROM 'message'
+    LEFT JOIN 'message_quoted' ON message._id=message_quoted.message_row_id
+    JOIN 'jid', 'chat' ON message.sender_jid_row_id=jid._id OR message.chat_row_id=chat._id AND chat.jid_row_id=jid._id
+    WHERE message._id={message_row_id}
     """
 
     exec = msgdb_cursor.execute(query)
     res_query = exec.fetchone()
     if res_query is None:
-        return None
+        return None, None
     res = dict(zip([col[0] for col in exec.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
@@ -95,16 +94,24 @@ def chat_resolver(
         str: 'jid' of the person who sent the message
     """
     if chat_row_id:
-        msgdb_query = f"""SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view._id={chat_row_id}"""
+        msgdb_query = f"""
+        SELECT chat._id as chat_id, jid.raw_string as raw_string_jid
+        FROM 'chat'
+        JOIN 'jid' ON chat.jid_row_id=jid._id
+        WHERE chat._id={chat_row_id}"""
     elif phone_number:
-        msgdb_query = f"""SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view.raw_string_jid LIKE '%{phone_number}@%'"""
+        msgdb_query = f"""
+        SELECT chat._id as chat_id, jid.raw_string as raw_string_jid
+        FROM 'chat'
+        JOIN 'jid' ON chat.jid_row_id=jid._id
+        WHERE jid.raw_string LIKE '%{phone_number}@%'"""
     else:
         raise Exception("'chat_row_id' and 'phone_number' both cannot be None")
 
     exec = msgdb_cursor.execute(msgdb_query)
     res_query = exec.fetchone()
     if res_query is None:
-        return None
+        return None, None
     res = dict(zip([col[0] for col in exec.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
