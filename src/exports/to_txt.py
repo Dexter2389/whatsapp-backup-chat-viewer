@@ -64,9 +64,9 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
         Yields:
             Message: Message object to which the reply was given.
         """
-        for chat in chat_list:
-            if compare_function(chat):
-                yield chat
+        for ct in chat_list:
+            if compare_function(ct):
+                yield ct
 
     for idx, message in enumerate(chat.messages):
         date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
