@@ -1,16 +1,17 @@
 import sqlite3
 import argparse
+from typing import Tuple, List
 
 from src import builder
 from src.export_to_txt import chats_to_txt_raw, chats_to_txt_formatted
 
 
-def create_db_connection(file_path):
+def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     db = sqlite3.connect(file_path)
     return db, db.cursor()
 
 
-def close_db_connections(databases):
+def close_db_connections(databases: List[sqlite3.Connection]) -> None:
     for db in databases:
         db.close()
 

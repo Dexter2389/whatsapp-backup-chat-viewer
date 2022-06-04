@@ -1,4 +1,8 @@
-def media_resolver(msgdb_cursor, message_row_id):
+import sqlite3
+from typing import Any, Dict, Tuple
+
+
+def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[str, Any]:
     query = f"SELECT message_media.message_row_id as message_id, message_media.media_job_uuid, message_media.file_path, message_media.mime_type FROM message_media WHERE message_media.message_row_id='{message_row_id}'"
     exec = msgdb_cursor.execute(query)
     res_query = exec.fetchone()
@@ -8,7 +12,9 @@ def media_resolver(msgdb_cursor, message_row_id):
     return res
 
 
-def message_resolver(msgdb_cursor, message_row_id):
+def message_resolver(
+    msgdb_cursor: sqlite3.Cursor, message_row_id: int
+) -> Tuple[Dict[str, Any], str]:
     query = f"""
     SELECT message_view._id as message_id, message_view.key_id, message_view.chat_row_id as chat_id, message_view.from_me, (CASE WHEN jid.raw_string IS NULL THEN chat_view.raw_string_jid ELSE jid.raw_string END) as raw_string_jid, (CASE WHEN message_view.received_timestamp=0 THEN message_view.timestamp ELSE message_view.received_timestamp END) as timestamp, message_view.text_data, message_quoted.key_id as reply_to
     FROM 'message_view'
@@ -27,7 +33,9 @@ def message_resolver(msgdb_cursor, message_row_id):
     return res, raw_string_jid
 
 
-def contact_resolver(wadb_cursor, raw_string_jid):
+def contact_resolver(
+    wadb_cursor: sqlite3.Cursor, raw_string_jid: str
+) -> Dict[str, Any]:
     query = f"""
     SELECT wa_contacts.display_name as name, wa_contacts.number FROM 'wa_contacts' WHERE wa_contacts.jid="{raw_string_jid}"
     """
@@ -42,7 +50,9 @@ def contact_resolver(wadb_cursor, raw_string_jid):
     return res
 
 
-def chat_resolver(msgdb_cursor, chat_row_id=None, phone_number=None):
+def chat_resolver(
+    msgdb_cursor: sqlite3.Cursor, chat_row_id: int = None, phone_number: str = None
+) -> Tuple[Dict[str, Any], str]:
     if chat_row_id:
         msgdb_query = f"""SELECT chat_view._id as chat_id, chat_view.raw_string_jid FROM 'chat_view' WHERE chat_view._id={chat_row_id}"""
     elif phone_number:

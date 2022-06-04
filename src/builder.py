@@ -1,10 +1,14 @@
+import sqlite3
 from itertools import chain
+from typing import List
 
 from .models import Chat, Contact, GroupName, Media, Message
 from .resolver import chat_resolver, contact_resolver, media_resolver, message_resolver
 
 
-def build_message_for_given_id(msgdb_cursor, wadb_cursor, message_id):
+def build_message_for_given_id(
+    msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor, message_id: int
+) -> Message:
     message, raw_string_jid = message_resolver(
         msgdb_cursor=msgdb_cursor, message_row_id=message_id
     )
@@ -27,8 +31,11 @@ def build_message_for_given_id(msgdb_cursor, wadb_cursor, message_id):
 
 
 def build_chat_for_given_id_or_phone_number(
-    msgdb_cursor, wadb_cursor, chat_row_id=None, phone_number=None
-):
+    msgdb_cursor: sqlite3.Cursor,
+    wadb_cursor: sqlite3.Cursor,
+    chat_row_id: int = None,
+    phone_number: str = None,
+) -> Chat:
     if chat_row_id:
         chat, raw_string_jid = chat_resolver(
             msgdb_cursor=msgdb_cursor, chat_row_id=chat_row_id
@@ -63,7 +70,9 @@ def build_chat_for_given_id_or_phone_number(
     return Chat(**chat)
 
 
-def build_all_chats(msgdb_cursor, wadb_cursor):
+def build_all_chats(
+    msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
+) -> List[Chat]:
     query = """SELECT chat_view._id FROM 'chat_view'"""
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
