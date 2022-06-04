@@ -1,16 +1,19 @@
 from datetime import datetime
+from typing import Callable, Generator, List
+
+from .models import Chat, Message
 
 
-def chats_to_txt_raw(chat, dir):
+def chats_to_txt_raw(chat: Chat, dir: str) -> None:
     messages = "\n".join([str(message) for message in chat.messages])
     with open(f"{dir}/{chat.chat_title.name}-raw.txt", "w") as file:
-        file.write(chat.chat_title.name + "\n" + messages)
+        file.write(f"{chat.chat_title.name}\n\n{messages}")
 
 
-def chats_to_txt_formatted(chat, dir):
+def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
     message_list = []
 
-    def resolve_sender_name(message):
+    def resolve_sender_name(message: Message) -> str:
         """Utility function to extract sender_name from a given message.
 
         Args:
@@ -31,14 +34,18 @@ def chats_to_txt_formatted(chat, dir):
             )
         return sender_name
 
-    def find_reply(compare_function, chat_list):
+    def find_reply(
+        compare_function: Callable, chat_list: List[Message]
+    ) -> Generator[Message, None, None]:
         """Generator function to find the message to which a reply was given.
 
         Args:
-            compare_function (func): Compare lambda function that needs to be run against the chat_list.
-            chat_list (list): List of chat messages.
+            compare_function (function): Compare lambda function that needs to be run against the chat_list.
+            chat_list (List[Message]): List of chat messages.
         """
-        next((x for x in chat_list if compare_function(x)), None)
+        for chat in chat_list:
+            if compare_function(chat):
+                yield chat
 
     for idx, message in enumerate(chat.messages):
         date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
@@ -56,9 +63,12 @@ def chats_to_txt_formatted(chat, dir):
 
             # Retrieve the 'original message' to which the replied message belongs to.
             if message.reply_to:
-                orig_message = find_reply(
-                    lambda x: message.reply_to == x.key_id,
-                    chat.messages[:idx],
+                orig_message = next(
+                    find_reply(
+                        lambda x: message.reply_to == x.key_id,
+                        chat.messages[:idx],
+                    ),
+                    None,
                 )  # Get the original message.
 
                 # Check if the reply is given to a deleted message
@@ -82,4 +92,4 @@ def chats_to_txt_formatted(chat, dir):
 
     messages = "\n".join(message_list)
     with open(f"{dir}/{chat.chat_title.name}.txt", "w") as file:
-        file.write(chat.chat_title.name + "\n\n" + messages)
+        file.write(f"{chat.chat_title.name}\n\n{messages}")
