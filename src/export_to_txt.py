@@ -31,8 +31,14 @@ def chats_to_txt_formatted(chat, dir):
             )
         return sender_name
 
-    # Generator function to find the message to which a reply was given.
-    find_reply = lambda fun, lst: next((x for x in lst if fun(x)), None)
+    def find_reply(compare_function, chat_list):
+        """Generator function to find the message to which a reply was given.
+
+        Args:
+            compare_function (func): Compare lambda function that needs to be run against the chat_list.
+            chat_list (list): List of chat messages.
+        """
+        next((x for x in chat_list if compare_function(x)), None)
 
     for idx, message in enumerate(chat.messages):
         date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
@@ -66,7 +72,7 @@ def chats_to_txt_formatted(chat, dir):
                         orig_message_data_str = f"media: {orig_message.media.file_path}"
                     message_str += f"\n\t>>> Reply to: {resolve_sender_name(orig_message)} - {orig_message_data_str}"
                 else:
-                    message_str += f"\n\t>>> Reply to: 'Message has been deleted'"
+                    message_str += "\n\t>>> Reply to: 'Message has been deleted'"
 
             # Retrieve media from the message if any
             if message.media:

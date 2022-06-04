@@ -1,0 +1,25 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        description: Perform `black`` formatting check and apply if necessary.
+        entry: poetry run black src tests
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: isort
+        name: isort
+        description: Perform `isort` check and apply if necessary.
+        entry: poetry run isort --profile black src tests
+        language: system
+        always_run: true
+        pass_filenames: false
+      - id: flake8
+        name: flake8
+        description: Perform flake8 linting checks.
+        entry: poetry run flake8 --max-line-length=88 --ignore=E203,E501,W503 src tests
+        language: system
+        always_run: true
+        pass_filenames: false
+        

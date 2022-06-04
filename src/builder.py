@@ -1,7 +1,7 @@
 from itertools import chain
 
-from .models import Media, Message, Chat, Contact, GroupName
-from .resolver import chat_resolver, message_resolver, media_resolver, contact_resolver
+from .models import Chat, Contact, GroupName, Media, Message
+from .resolver import chat_resolver, contact_resolver, media_resolver, message_resolver
 
 
 def build_message_for_given_id(msgdb_cursor, wadb_cursor, message_id):
@@ -64,7 +64,7 @@ def build_chat_for_given_id_or_phone_number(
 
 
 def build_all_chats(msgdb_cursor, wadb_cursor):
-    query = f"""SELECT chat_view._id FROM 'chat_view'"""
+    query = """SELECT chat_view._id FROM 'chat_view'"""
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:
