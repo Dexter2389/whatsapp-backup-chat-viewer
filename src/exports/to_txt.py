@@ -1,20 +1,38 @@
 from datetime import datetime
 from typing import Callable, Generator, List
 
-from .models import Chat, Message
+from ..models import Chat, Message
 
 
 def chats_to_txt_raw(chat: Chat, dir: str) -> None:
+    """Store chat messages in a text file without formatting.
+
+    Args:
+        chat (Chat): Chat to be formatted.
+        dir (str): Directory to write the formatted chat.
+
+    Returns:
+        None: Creates .txt file of the chat in the given directory
+    """
     messages = "\n".join([str(message) for message in chat.messages])
     with open(f"{dir}/{chat.chat_title.name}-raw.txt", "w") as file:
         file.write(f"{chat.chat_title.name}\n\n{messages}")
 
 
 def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
+    """Format chat messages in a readable format and store them as a text file.
+
+    Args:
+        chat (Chat): Chat to be formatted.
+        dir (str): Directory to write the formatted chat.
+
+    Returns:
+        None: Creates .txt file of the chat in the given directory
+    """
     message_list = []
 
     def resolve_sender_name(message: Message) -> str:
-        """Utility function to extract sender_name from a given message.
+        """Utility function to extract 'sender_name' from a given message.
 
         Args:
             message (Message): Message from which we want to extract sender_name.
@@ -42,6 +60,9 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
         Args:
             compare_function (function): Compare lambda function that needs to be run against the chat_list.
             chat_list (List[Message]): List of chat messages.
+
+        Yields:
+            Message: Message object to which the reply was given.
         """
         for chat in chat_list:
             if compare_function(chat):

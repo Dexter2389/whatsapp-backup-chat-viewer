@@ -9,6 +9,16 @@ from .resolver import chat_resolver, contact_resolver, media_resolver, message_r
 def build_message_for_given_id(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor, message_id: int
 ) -> Message:
+    """Extract text message and media (if available) for a given message_id.
+
+    Args:
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
+        message_id (int): ID of the message to extract
+
+    Returns:
+        Message: Message corresponding to the given message_id
+    """
     message, raw_string_jid = message_resolver(
         msgdb_cursor=msgdb_cursor, message_row_id=message_id
     )
@@ -36,6 +46,18 @@ def build_chat_for_given_id_or_phone_number(
     chat_row_id: int = None,
     phone_number: str = None,
 ) -> Chat:
+    """Extract all the messages and media (if available) for a given chat_row_id or phone_number.
+
+    Args:
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
+        chat_row_id (int): ID of the chat to extract
+        phone_number (str): Phone Number of the person you want to extract the chats of
+        message_id (int): ID of the message to extract
+
+    Returns:
+        Chat: Chat corresponding to the given chat_row_id or phone_number
+    """
     if chat_row_id:
         chat, raw_string_jid = chat_resolver(
             msgdb_cursor=msgdb_cursor, chat_row_id=chat_row_id
@@ -73,7 +95,16 @@ def build_chat_for_given_id_or_phone_number(
 def build_all_chats(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
 ) -> List[Chat]:
-    query = """SELECT chat_view._id FROM 'chat_view'"""
+    """Extract all chats in the msgdb database.
+
+    Args:
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
+
+    Returns:
+        List[Chat]: All the chats in the msgdb database
+    """
+    query = "SELECT chat_view._id FROM 'chat_view'"
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:

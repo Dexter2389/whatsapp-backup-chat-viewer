@@ -3,7 +3,7 @@ import argparse
 from typing import Tuple, List
 
 from src import builder
-from src.export_to_txt import chats_to_txt_raw, chats_to_txt_formatted
+from src.exports.to_txt import chats_to_txt_raw, chats_to_txt_formatted
 
 
 def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
