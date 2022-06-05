@@ -33,6 +33,16 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 $ python main.py -mdb msgstore.db -wdb wa.db -o output
 ```
 
+<!-- ## Development
+
+To run unit test:
+
+```shell
+$ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml tests/unit
+```
+
+(This section will be updated soon.) -->
+
 <!-- ## Retrieving WhatsApp Databases
 
 For retrieving the WhatsApp database files from an Android device there are several options.
