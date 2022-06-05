@@ -1,9 +1,9 @@
-import sqlite3
 import argparse
-from typing import Tuple, List
+import sqlite3
+from typing import List, Tuple
 
 from src import builder
-from src.exports.to_txt import chats_to_txt_raw, chats_to_txt_formatted
+from src.exports.to_txt import chats_to_txt_formatted, chats_to_txt_raw
 
 
 def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
