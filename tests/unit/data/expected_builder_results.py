@@ -1,4 +1,4 @@
-from src.models import Chat, Contact, GroupName, Media, Message
+from src.models import Chat, Contact, GeoPosition, GroupName, Media, Message
 
 expected_build_message_for_given_id_results = [
     Message(
@@ -16,6 +16,7 @@ expected_build_message_for_given_id_results = [
         media=Media(
             message_id=158393, media_job_uuid="", file_path="", mime_type="video/mp4"
         ),
+        geo_position=None,
         reply_to=None,
     ),
     Message(
@@ -36,6 +37,7 @@ expected_build_message_for_given_id_results = [
             file_path="Media/WhatsApp Images/IMG-20181127-WA0028.jpg",
             mime_type="image/jpeg",
         ),
+        geo_position=None,
         reply_to=None,
     ),
     Message(
@@ -56,6 +58,7 @@ expected_build_message_for_given_id_results = [
             file_path="Media/WhatsApp Images/Sent/IMG-20181127-WA0026.jpg",
             mime_type="",
         ),
+        geo_position=None,
         reply_to=None,
     ),
 ]
@@ -82,6 +85,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543319742188,
                 text_data="Duis lobortis sapien ac risus vulputate, in tempor est finibus??",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -97,6 +101,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543319752656,
                 text_data="Proin porttitor magna libero",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -112,6 +117,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543320559942,
                 text_data="Sed ante enim",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -127,6 +133,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543320572313,
                 text_data="Vehicula!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -142,6 +149,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543320583683,
                 text_data="😂😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -157,6 +165,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543320614339,
                 text_data="Curabitur laoreet purus vitae magna sagittis condimentum😅😅",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -172,6 +181,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543320625962,
                 text_data="Nullam!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -192,6 +202,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                     file_path="Media/WhatsApp Images/IMG-20181127-WA0027.jpg",
                     mime_type="image/jpeg",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -212,6 +223,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                     file_path="",
                     mime_type="video/mp4",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -235,6 +247,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325071417,
                 text_data="Nunc maximus, massa sit amet..",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -250,6 +263,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325078040,
                 text_data="Sed eget vulputate ex.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -270,6 +284,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                     file_path="Media/WhatsApp Images/IMG-20181127-WA0028.jpg",
                     mime_type="image/jpeg",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -285,6 +300,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325182506,
                 text_data="Aliquam erat volutpat!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -300,6 +316,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325193470,
                 text_data="Maecenas auctor metus id diam pellentesque, sit amet faucibus leo aliquet.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -315,6 +332,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325317387,
                 text_data="In interdum leo sit amet sem eleifend tempus",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -330,6 +348,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325325600,
                 text_data="Nunc metus ante",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -345,6 +364,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325348713,
                 text_data="Quisque nec neque ut mi tempus scelerisque in at massa",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -360,6 +380,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325442602,
                 text_data="Proin id consequat lacus, quis aliquet mi",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -375,6 +396,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325462442,
                 text_data="Ut at dui orci.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -390,6 +412,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325478743,
                 text_data="",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -405,6 +428,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543325482456,
                 text_data="Sed at rutrum metus.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -420,6 +444,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543326162205,
                 text_data="Sed lorem mi, volutpat a quam eget, porta efficitur arcu. Sed a malesuada sem!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -435,6 +460,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543326183564,
                 text_data="Maecenas euismod nulla commodo volutpat tincidunt.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -450,6 +476,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543326216928,
                 text_data="Mauris accumsan auctor sollicitudin.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -480,6 +507,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                     file_path="Media/WhatsApp Images/Sent/IMG-20181127-WA0025.jpg",
                     mime_type="",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -495,6 +523,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                 timestamp=1543317698865,
                 text_data="Fusce mollis libero!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -515,6 +544,7 @@ expected_build_chat_for_given_id_or_phone_number_results = [
                     file_path="Media/WhatsApp Images/Sent/IMG-20181127-WA0026.jpg",
                     mime_type="",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -543,8 +573,81 @@ expected_build_all_chats = [
                 timestamp=1543325990278,
                 text_data="Hacinia iaculis dui suscipit.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
-            )
+            ),
+            Message(
+                message_id=158394,
+                key_id="3D15299A2A6B62DBC5BEC42E42C9E48A",
+                chat_id=456,
+                from_me=1,
+                sender_contact=Contact(
+                    raw_string_jid="635455887180@s.whatsapp.net",
+                    name="Josefína Šimunović",
+                    number="+635455887180",
+                ),
+                timestamp=1580132486421,
+                text_data="",
+                media=None,
+                geo_position=GeoPosition(
+                    message_id=158394, latitude=65.754409, longitude=-168.924534
+                ),
+                reply_to=None,
+            ),
+            Message(
+                message_id=158395,
+                key_id="C393795171F33C8B1FD1375E86057E35",
+                chat_id=456,
+                from_me=1,
+                sender_contact=Contact(
+                    raw_string_jid="635455887180@s.whatsapp.net",
+                    name="Josefína Šimunović",
+                    number="+635455887180",
+                ),
+                timestamp=1628239715988,
+                text_data="",
+                media=None,
+                geo_position=GeoPosition(
+                    message_id=158395, latitude=-33.16799, longitude=147.4183
+                ),
+                reply_to=None,
+            ),
+            Message(
+                message_id=158396,
+                key_id="94E55528D3A181629D02F9443D314422",
+                chat_id=456,
+                from_me=1,
+                sender_contact=Contact(
+                    raw_string_jid="635455887180@s.whatsapp.net",
+                    name="Josefína Šimunović",
+                    number="+635455887180",
+                ),
+                timestamp=1628240061868,
+                text_data="",
+                media=None,
+                geo_position=GeoPosition(
+                    message_id=158396, latitude=48.06677, longitude=-74.22973
+                ),
+                reply_to=None,
+            ),
+            Message(
+                message_id=158397,
+                key_id="4DB7E4F06BCB95146FF1E4FBEB64F5A5",
+                chat_id=456,
+                from_me=1,
+                sender_contact=Contact(
+                    raw_string_jid="635455887180@s.whatsapp.net",
+                    name="Josefína Šimunović",
+                    number="+635455887180",
+                ),
+                timestamp=1628240378482,
+                text_data="",
+                media=None,
+                geo_position=GeoPosition(
+                    message_id=158397, latitude=55.84022, longitude=-155.26259
+                ),
+                reply_to=None,
+            ),
         ],
     ),
     Chat(
@@ -568,6 +671,7 @@ expected_build_all_chats = [
                 timestamp=1543319742188,
                 text_data="Duis lobortis sapien ac risus vulputate, in tempor est finibus??",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -583,6 +687,7 @@ expected_build_all_chats = [
                 timestamp=1543319752656,
                 text_data="Proin porttitor magna libero",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -598,6 +703,7 @@ expected_build_all_chats = [
                 timestamp=1543320559942,
                 text_data="Sed ante enim",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -613,6 +719,7 @@ expected_build_all_chats = [
                 timestamp=1543320572313,
                 text_data="Vehicula!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -628,6 +735,7 @@ expected_build_all_chats = [
                 timestamp=1543320583683,
                 text_data="😂😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -643,6 +751,7 @@ expected_build_all_chats = [
                 timestamp=1543320614339,
                 text_data="Curabitur laoreet purus vitae magna sagittis condimentum😅😅",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -658,6 +767,7 @@ expected_build_all_chats = [
                 timestamp=1543320625962,
                 text_data="Nullam!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -678,6 +788,7 @@ expected_build_all_chats = [
                     file_path="Media/WhatsApp Images/IMG-20181127-WA0027.jpg",
                     mime_type="image/jpeg",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -698,6 +809,7 @@ expected_build_all_chats = [
                     file_path="",
                     mime_type="video/mp4",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -721,6 +833,7 @@ expected_build_all_chats = [
                 timestamp=1543317102543,
                 text_data="Aliquam?!😂😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -729,13 +842,12 @@ expected_build_all_chats = [
                 chat_id=484,
                 from_me=0,
                 sender_contact=Contact(
-                    raw_string_jid="15106049490@s.whatsapp.net",
-                    name=None,
-                    number=None,
+                    raw_string_jid="15106049490@s.whatsapp.net", name=None, number=None
                 ),
                 timestamp=1543318028873,
                 text_data="In hac habitasse platea dictumst. Quisque ornare tempus elit a dapibus...",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -751,6 +863,7 @@ expected_build_all_chats = [
                 timestamp=1543318090480,
                 text_data="Donec",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -766,6 +879,7 @@ expected_build_all_chats = [
                 timestamp=1543318620768,
                 text_data="😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -791,6 +905,7 @@ expected_build_all_chats = [
                 timestamp=1543315998885,
                 text_data="Morbi posuere, tellus non!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -806,6 +921,7 @@ expected_build_all_chats = [
                 timestamp=1543316000230,
                 text_data="Cquis consequat est lectus eget tortor 😂😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -821,6 +937,7 @@ expected_build_all_chats = [
                 timestamp=1543316003458,
                 text_data="Suscipit dapibus, est nisi rutrum turpis",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -836,6 +953,7 @@ expected_build_all_chats = [
                 timestamp=1543316005508,
                 text_data="Curabitur bibendum tortor eros.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -851,6 +969,7 @@ expected_build_all_chats = [
                 timestamp=1543316007037,
                 text_data="☺",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -866,6 +985,7 @@ expected_build_all_chats = [
                 timestamp=1543316009569,
                 text_data="Curabitur ultrices eget diam ultricies congue!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -881,6 +1001,7 @@ expected_build_all_chats = [
                 timestamp=1543316019272,
                 text_data="Fusce facilisis, turpis vitae pharetra dignissim!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -896,6 +1017,7 @@ expected_build_all_chats = [
                 timestamp=1543316042083,
                 text_data="Mi augue sagittis sem!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -911,6 +1033,7 @@ expected_build_all_chats = [
                 timestamp=1543316042062,
                 text_data="Lolol faucibus eros nunc eleifend urna 😅",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -926,6 +1049,7 @@ expected_build_all_chats = [
                 timestamp=1543316048719,
                 text_data="Ullamcorper",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -941,6 +1065,7 @@ expected_build_all_chats = [
                 timestamp=1543316053698,
                 text_data="Eros ac!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -956,6 +1081,7 @@ expected_build_all_chats = [
                 timestamp=1543316074469,
                 text_data="Cras ullamcorper eget massa nec sodales!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -971,6 +1097,7 @@ expected_build_all_chats = [
                 timestamp=1543316084150,
                 text_data="😂😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -986,6 +1113,7 @@ expected_build_all_chats = [
                 timestamp=1543316088230,
                 text_data="Phasellus quis",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1001,6 +1129,7 @@ expected_build_all_chats = [
                 timestamp=1543323671026,
                 text_data="Cras non ligula id sem gravida 🤪🤚🏻",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1016,6 +1145,7 @@ expected_build_all_chats = [
                 timestamp=1543324938234,
                 text_data="Duis lobortis justo!! 😂",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -1046,6 +1176,7 @@ expected_build_all_chats = [
                     file_path="Media/WhatsApp Images/Sent/IMG-20181127-WA0025.jpg",
                     mime_type="",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1061,6 +1192,7 @@ expected_build_all_chats = [
                 timestamp=1543317698865,
                 text_data="Fusce mollis libero!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1081,6 +1213,7 @@ expected_build_all_chats = [
                     file_path="Media/WhatsApp Images/Sent/IMG-20181127-WA0026.jpg",
                     mime_type="",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -1104,6 +1237,7 @@ expected_build_all_chats = [
                 timestamp=1543325071417,
                 text_data="Nunc maximus, massa sit amet..",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1119,6 +1253,7 @@ expected_build_all_chats = [
                 timestamp=1543325078040,
                 text_data="Sed eget vulputate ex.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1139,6 +1274,7 @@ expected_build_all_chats = [
                     file_path="Media/WhatsApp Images/IMG-20181127-WA0028.jpg",
                     mime_type="image/jpeg",
                 ),
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1154,6 +1290,7 @@ expected_build_all_chats = [
                 timestamp=1543325182506,
                 text_data="Aliquam erat volutpat!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1169,6 +1306,7 @@ expected_build_all_chats = [
                 timestamp=1543325193470,
                 text_data="Maecenas auctor metus id diam pellentesque, sit amet faucibus leo aliquet.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1184,6 +1322,7 @@ expected_build_all_chats = [
                 timestamp=1543325317387,
                 text_data="In interdum leo sit amet sem eleifend tempus",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1199,6 +1338,7 @@ expected_build_all_chats = [
                 timestamp=1543325325600,
                 text_data="Nunc metus ante",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1214,6 +1354,7 @@ expected_build_all_chats = [
                 timestamp=1543325348713,
                 text_data="Quisque nec neque ut mi tempus scelerisque in at massa",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1229,6 +1370,7 @@ expected_build_all_chats = [
                 timestamp=1543325442602,
                 text_data="Proin id consequat lacus, quis aliquet mi",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1244,6 +1386,7 @@ expected_build_all_chats = [
                 timestamp=1543325462442,
                 text_data="Ut at dui orci.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1259,6 +1402,7 @@ expected_build_all_chats = [
                 timestamp=1543325478743,
                 text_data="",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1274,6 +1418,7 @@ expected_build_all_chats = [
                 timestamp=1543325482456,
                 text_data="Sed at rutrum metus.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1289,6 +1434,7 @@ expected_build_all_chats = [
                 timestamp=1543326162205,
                 text_data="Sed lorem mi, volutpat a quam eget, porta efficitur arcu. Sed a malesuada sem!!",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1304,6 +1450,7 @@ expected_build_all_chats = [
                 timestamp=1543326183564,
                 text_data="Maecenas euismod nulla commodo volutpat tincidunt.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1319,6 +1466,7 @@ expected_build_all_chats = [
                 timestamp=1543326216928,
                 text_data="Mauris accumsan auctor sollicitudin.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -1344,6 +1492,7 @@ expected_build_all_chats = [
                 timestamp=1543325922375,
                 text_data="Mauris tristique magna nec tortor convallis blandit. Donec eu nibh quis magna blandit pretium quis sed nibh.",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1359,6 +1508,7 @@ expected_build_all_chats = [
                 timestamp=1543325941003,
                 text_data="Quisque porttitor ex ac quam pellentesque?",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],
@@ -1366,8 +1516,7 @@ expected_build_all_chats = [
     Chat(
         chat_id=583,
         chat_title=GroupName(
-            raw_string_jid="849273263436-1542636651@g.us",
-            name="Cras vel ligula leo",
+            raw_string_jid="849273263436-1542636651@g.us", name="Cras vel ligula leo"
         ),
         messages=[
             Message(
@@ -1383,6 +1532,7 @@ expected_build_all_chats = [
                 timestamp=1543317158744,
                 text_data="Ut tempor urna eu diam consequat luctus...",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1398,6 +1548,7 @@ expected_build_all_chats = [
                 timestamp=1543317366262,
                 text_data="Nunc hendrerit odio ac facilisis dapibus",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1413,6 +1564,7 @@ expected_build_all_chats = [
                 timestamp=1543317366263,
                 text_data="Aenean in dui nisl...eu aliquet nisi...",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1428,6 +1580,7 @@ expected_build_all_chats = [
                 timestamp=1543317366381,
                 text_data="👌👍👏",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1443,6 +1596,7 @@ expected_build_all_chats = [
                 timestamp=1543324718020,
                 text_data="👍",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1458,6 +1612,7 @@ expected_build_all_chats = [
                 timestamp=1543324738138,
                 text_data="In vehicula augue quis mi pharetra, quis hendrerit nibh vulputate",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
             Message(
@@ -1473,6 +1628,7 @@ expected_build_all_chats = [
                 timestamp=1543324742514,
                 text_data="Donec vehicula suscipit",
                 media=None,
+                geo_position=None,
                 reply_to=None,
             ),
         ],

@@ -38,7 +38,7 @@ $ python main.py -mdb msgstore.db -wdb wa.db -o output
 To run unit test:
 
 ```shell
-$ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml tests/unit
+$ pytest --cov=src --cov-report=term-missing tests
 ```
 
 (This section will be updated soon.) -->

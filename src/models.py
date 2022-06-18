@@ -35,6 +35,13 @@ class Media(object):
 
 
 @define
+class GeoPosition(object):
+    message_id: int  # Which message does this media belong to. Resolved from `message_location.message_row_id`.
+    latitude: float  # Resolved from `message_location.latitude`.
+    longitude: float  # Resolved from `message_location.longitude`.
+
+
+@define
 class Message(object):
     message_id: int  # Message ID. Resolved from `message._id`.
     key_id: str  # Key ID. Resolved from `message.key_id`.
@@ -46,6 +53,7 @@ class Message(object):
         str
     ]  # The actual text message. Resolved from `message.text_data`.
     media: Optional[Media]
+    geo_position: Optional[GeoPosition]
     reply_to: str  # If a reply, it is a reply to which message. Resolved from `message._id -> message_quoted.message_row_id -> message_quoted.key_id`
 
 

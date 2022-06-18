@@ -21,6 +21,27 @@ def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[st
     return res
 
 
+def geo_position_resolver(
+    msgdb_cursor: sqlite3.Cursor, message_row_id: int
+) -> Dict[str, Any]:
+    """Fetch geo-position related data for a given message_id from the msgdb.
+
+    Args:
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
+        message_row_id (int): ID of the message for which media data is retrieved
+
+    Returns:
+        Dict[str, Any]: Dictionary containing 'message_id', 'latitude' and 'longitude' keys.
+    """
+    query = f"SELECT message_location.message_row_id as message_id, message_location.latitude, message_location.longitude FROM message_location WHERE message_location.message_row_id='{message_row_id}'"
+    exec = msgdb_cursor.execute(query)
+    res_query = exec.fetchone()
+    if res_query is None:
+        return None
+    res = dict(zip([col[0] for col in exec.description], res_query))
+    return res
+
+
 def message_resolver(
     msgdb_cursor: sqlite3.Cursor, message_row_id: int
 ) -> Tuple[Dict[str, Any], str]:
@@ -45,7 +66,10 @@ def message_resolver(
     exec = msgdb_cursor.execute(query)
     res_query = exec.fetchone()
     if res_query is None:
-        return None, None
+        res_query = [
+            None,
+            None,
+        ]
     res = dict(zip([col[0] for col in exec.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
@@ -74,6 +98,9 @@ def contact_resolver(
             None,
         ]  # Need some better logic to resolve when we don't have a contact in wa.db
     res = dict(zip([col[0] for col in exec.description], res_query))
+    if res.get("name"):
+        if "/" in res["name"]:
+            res["name"] = res.get("name").replace("/", "_")
     return res
 
 
@@ -111,7 +138,10 @@ def chat_resolver(
     exec = msgdb_cursor.execute(msgdb_query)
     res_query = exec.fetchone()
     if res_query is None:
-        return None, None
+        res_query = [
+            None,
+            None,
+        ]  # Need some better logic to resolve when we don't have a contact in msgdb.db
     res = dict(zip([col[0] for col in exec.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
