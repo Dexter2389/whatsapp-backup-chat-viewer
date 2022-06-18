@@ -2,10 +2,10 @@ import sqlite3
 from itertools import chain
 from typing import List
 
-from .models import Chat, Contact, GeoPosition, GroupName, Media, Message
+from ..common import contact_resolver
+from ..models import Chat, Contact, GeoPosition, GroupName, Media, Message
 from .resolver import (
     chat_resolver,
-    contact_resolver,
     geo_position_resolver,
     media_resolver,
     message_resolver,
@@ -18,12 +18,12 @@ def build_message_for_given_id(
     """Extract text message, media (if available) and location (if available) for a given message_id.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
-        message_id (int): ID of the message to extract
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
+        message_id (int): ID of the message to extract.
 
     Returns:
-        Message: Message corresponding to the given message_id
+        Message: Message corresponding to the given message_id.
     """
     message, raw_string_jid = message_resolver(
         msgdb_cursor=msgdb_cursor, message_row_id=message_id
@@ -63,14 +63,13 @@ def build_chat_for_given_id_or_phone_number(
     """Extract all the messages and media (if available) for a given chat_row_id or phone_number.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
-        chat_row_id (int): ID of the chat to extract
-        phone_number (str): Phone Number of the person you want to extract the chats of
-        message_id (int): ID of the message to extract
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
+        chat_row_id (int): ID of the chat to extract. Defaults to None.
+        phone_number (str): Phone Number of the person you want to extract the chats of. Defaults to None.
 
     Returns:
-        Chat: Chat corresponding to the given chat_row_id or phone_number
+        Chat: Chat corresponding to the given chat_row_id or phone_number.
     """
     if chat_row_id:
         chat, raw_string_jid = chat_resolver(
@@ -112,11 +111,11 @@ def build_all_chats(
     """Extract all chats in the msgdb database.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
 
     Returns:
-        List[Chat]: All the chats in the msgdb database
+        List[Chat]: All the chats in the msgdb database.
     """
     query = "SELECT chat._id FROM 'chat'"
     exec = msgdb_cursor.execute(query)
