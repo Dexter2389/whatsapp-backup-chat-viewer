@@ -2,14 +2,20 @@ import sqlite3
 from itertools import chain
 from typing import List
 
-from .models import Chat, Contact, GroupName, Media, Message
-from .resolver import chat_resolver, contact_resolver, media_resolver, message_resolver
+from .models import Chat, Contact, GeoPosition, GroupName, Media, Message
+from .resolver import (
+    chat_resolver,
+    contact_resolver,
+    geo_position_resolver,
+    media_resolver,
+    message_resolver,
+)
 
 
 def build_message_for_given_id(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor, message_id: int
 ) -> Message:
-    """Extract text message and media (if available) for a given message_id.
+    """Extract text message, media (if available) and location (if available) for a given message_id.
 
     Args:
         msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
@@ -35,7 +41,15 @@ def build_message_for_given_id(
     if media:
         message["media"] = Media(**media)
     else:
-        message["media"] = media
+        message["media"] = None
+
+    geo_position = geo_position_resolver(
+        msgdb_cursor=msgdb_cursor, message_row_id=message_id
+    )
+    if geo_position:
+        message["geo_position"] = GeoPosition(**geo_position)
+    else:
+        message["geo_position"] = None
 
     return Message(**message)
 

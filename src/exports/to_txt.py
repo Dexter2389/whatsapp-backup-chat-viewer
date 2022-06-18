@@ -70,7 +70,12 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
 
     for idx, message in enumerate(chat.messages):
         date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
-        if not message.text_data and not message.reply_to and not message.media:
+        if (
+            not message.text_data
+            and not message.reply_to
+            and not message.media
+            and not message.geo_position
+        ):
             # If there is no data or media or reply_to, we can assume that the message was about change in chat settings.
             message_str = f"[{date_time}] 'Change in the chat settings'"
         else:
@@ -101,6 +106,10 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
                         )
                     elif orig_message.media:
                         orig_message_data_str = f"media: {orig_message.media.file_path}"
+                    elif orig_message.geo_position:
+                        orig_message_data_str = f"location: ({orig_message.geo_position.latitude},{orig_message.geo_position.longitude})"
+                    else:
+                        orig_message_data_str = ""
                     message_str += f"\n\t>>> Reply to: {resolve_sender_name(orig_message)} - {orig_message_data_str}"
                 else:
                     message_str += "\n\t>>> Reply to: 'Message has been deleted'"
@@ -108,6 +117,10 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
             # Retrieve media from the message if any
             if message.media:
                 message_str += f"\n\t>>> Media: {message.media.file_path}"
+
+            # Retrieve location from the message if any
+            if message.geo_position:
+                message_str += f"\n\t>>> Location: ({message.geo_position.latitude},{message.geo_position.longitude})"
 
         message_list.append(message_str)
 

@@ -31,7 +31,7 @@ if __name__ == "__main__":
         "-f",
         choices=["raw_txt", "formatted_txt", "json"],
         type=str,
-        default="formatted",
+        default="formatted_txt",
         help="Style in which your parsed messages will be stored",
     )
     ap.add_argument(
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     msgdb, msgdb_cursor = create_db_connection(args.msgdb)
     wadb, wadb_cursor = create_db_connection(args.wadb)
 
-    if args.chat_output_style == "raw":
+    if args.chat_output_style == "raw_txt":
         if args.extract_chat == "all":
             chats = builder.build_all_chats(msgdb_cursor, wadb_cursor)
             for chat in chats:
@@ -69,7 +69,7 @@ if __name__ == "__main__":
                     chat=chat,
                     dir=args.parsed_chat_output_dir,
                 )
-    elif args.chat_output_style == "formatted":
+    elif args.chat_output_style == "formatted_txt":
         if args.extract_chat == "all":
             chats = builder.build_all_chats(msgdb_cursor, wadb_cursor)
             for chat in chats:

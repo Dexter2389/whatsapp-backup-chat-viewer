@@ -35,6 +35,25 @@ def test_media_resolver():
     msgdb.close()
 
 
+def test_geo_position_resolver():
+    expected_results = [
+        {"message_id": 158394, "latitude": 65.754409, "longitude": -168.924534},
+        None,
+        {"message_id": 158397, "latitude": 55.84022, "longitude": -155.26259},
+    ]
+
+    msgdb = sqlite3.connect("tests/unit/data/test_msgstore.db")
+    msgdb_cursor = msgdb.cursor()
+
+    message_ids = [158394, 158375, 158397]
+    for message_id, expected_result in zip(message_ids, expected_results):
+        assert (
+            resolver.geo_position_resolver(msgdb_cursor, message_id) == expected_result
+        )
+
+    msgdb.close()
+
+
 def test_message_resolver():
     expected_results = [
         (
