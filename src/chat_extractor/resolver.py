@@ -6,8 +6,8 @@ def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[st
     """Fetch media related data for a given message_id from the msgdb.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        message_row_id (int): ID of the message for which media data is retrieved
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        message_row_id (int): ID of the message for which media data is retrieved.
 
     Returns:
         Dict[str, Any]: Dictionary containing 'message_id', 'media_job_uuid', 'file_path' and 'mime_type' keys.
@@ -27,8 +27,8 @@ def geo_position_resolver(
     """Fetch geo-position related data for a given message_id from the msgdb.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        message_row_id (int): ID of the message for which media data is retrieved
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        message_row_id (int): ID of the message for which media data is retrieved.
 
     Returns:
         Dict[str, Any]: Dictionary containing 'message_id', 'latitude' and 'longitude' keys.
@@ -48,12 +48,12 @@ def message_resolver(
     """Fetch message data for a given message_id from the msgdb.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        message_row_id (int): ID of the message for which message data is retrieved
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        message_row_id (int): ID of the message for which message data is retrieved.
 
     Returns:
         Dict[str, Any]: Dictionary containing 'message_id', 'key_id', 'chat_id', 'from_me', 'raw_string_jid', 'timestamp', 'text_data' and 'message_quoted.key_id' keys.
-        str: 'jid' of the person who sent the message
+        str: 'raw_string_jid' of the person who sent the message
     """
     query = f"""
     SELECT message._id as message_id, message.key_id, message.chat_row_id as chat_id, message.from_me, jid.raw_string as raw_string_jid, (CASE WHEN message.received_timestamp=0 THEN message.timestamp ELSE message.received_timestamp END) as timestamp, message.text_data, message_quoted.key_id as reply_to
@@ -75,35 +75,6 @@ def message_resolver(
     return res, raw_string_jid
 
 
-def contact_resolver(
-    wadb_cursor: sqlite3.Cursor, raw_string_jid: str
-) -> Dict[str, Any]:
-    """Fetch contact data for a given raw_string_jid from the wadb.
-
-    Args:
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor
-        raw_string_jid (str): JID of the person who for which contact data is retrieved
-
-    Returns:
-        Dict[str, Any]: Dictionary containing 'name' and 'number' keys.
-    """
-    query = f"""
-    SELECT wa_contacts.display_name as name, wa_contacts.number FROM 'wa_contacts' WHERE wa_contacts.jid="{raw_string_jid}"
-    """
-    exec = wadb_cursor.execute(query)
-    res_query = exec.fetchone()
-    if res_query is None:
-        res_query = [
-            None,
-            None,
-        ]  # Need some better logic to resolve when we don't have a contact in wa.db
-    res = dict(zip([col[0] for col in exec.description], res_query))
-    if res.get("name"):
-        if "/" in res["name"]:
-            res["name"] = res.get("name").replace("/", "_")
-    return res
-
-
 def chat_resolver(
     msgdb_cursor: sqlite3.Cursor,
     chat_row_id: Union[int, None] = None,
@@ -112,13 +83,13 @@ def chat_resolver(
     """Fetch chat data for a given chat_row_id from the msgdb.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor
-        chat_row_id (Union[int, None]): ID of the chat for which chat data is retrieved
-        phone_number (Union[str, None]): Phone number of the chat for which chat data is retrieved
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        chat_row_id (Union[int, None]): ID of the chat for which chat data is retrieved. Defaults to None.
+        phone_number (Union[str, None]): Phone number of the chat for which chat data is retrieved. Defaults to None.
 
     Returns:
-        Dict[str, Any]: Dictionary containing 'chat_id' and 'raw_string_jid' keys.
-        str: 'jid' of the person who sent the message
+        Dict[str, Any]: Dictionary containing 'chat_id' as key.
+        str: 'raw_string_jid' of the person who sent the message.
     """
     if chat_row_id:
         msgdb_query = f"""

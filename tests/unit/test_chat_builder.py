@@ -1,7 +1,7 @@
 import sqlite3
 
-from src import builder
-from tests.unit.data.expected_builder_results import (
+from src.chat_extractor import builder
+from tests.unit.data.expected_chat_builder_results import (
     expected_build_all_chats,
     expected_build_chat_for_given_id_or_phone_number_results,
     expected_build_message_for_given_id_results,
