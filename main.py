@@ -5,7 +5,12 @@ from typing import List, Tuple
 
 from src.call_log_extractor import builder as call_log_builder
 from src.chat_extractor import builder as chat_builder
-from src.exports.to_txt import chats_to_txt_formatted, chats_to_txt_raw
+from src.exports.to_txt import (
+    call_logs_to_txt_formatted,
+    call_logs_to_txt_raw,
+    chats_to_txt_formatted,
+    chats_to_txt_raw,
+)
 
 
 def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
@@ -86,7 +91,13 @@ if __name__ == "__main__":
                 )
                 if not os.path.exists(output_call_logs_directory):
                     os.makedirs(output_call_logs_directory)
-                calls = call_log_builder.build_all_call_logs(msgdb_cursor, wadb_cursor)
+                call_logs = call_log_builder.build_all_call_logs(
+                    msgdb_cursor, wadb_cursor
+                )
+                for call_log in call_logs:
+                    call_logs_to_txt_raw(
+                        call_log=call_log, dir=output_call_logs_directory
+                    )
         else:
             for ph_no in args.backup_specific_or_all_chat_call:
                 if "chats" in args.backup_strategy:
@@ -106,9 +117,15 @@ if __name__ == "__main__":
                     )
                     if not os.path.exists(output_call_logs_directory):
                         os.makedirs(output_call_logs_directory)
-                    call = call_log_builder.build_call_log_for_given_id_or_phone_number(
-                        msgdb_cursor, wadb_cursor, phone_number=ph_no
+                    call_log = (
+                        call_log_builder.build_call_log_for_given_id_or_phone_number(
+                            msgdb_cursor, wadb_cursor, phone_number=ph_no
+                        )
                     )
+                    call_logs_to_txt_raw(
+                        call_log=call_log, dir=output_call_logs_directory
+                    )
+
     elif args.backup_output_style == "formatted_txt":
         if args.backup_specific_or_all_chat_call == "all":
             if "chats" in args.backup_strategy:
@@ -128,6 +145,10 @@ if __name__ == "__main__":
                 if not os.path.exists(output_call_logs_directory):
                     os.makedirs(output_call_logs_directory)
                 calls = call_log_builder.build_all_call_logs(msgdb_cursor, wadb_cursor)
+                for call in calls:
+                    call_logs_to_txt_formatted(
+                        call_log=call, dir=output_call_logs_directory
+                    )
         else:
             for ph_no in args.backup_specific_or_all_chat_call:
                 if "chats" in args.backup_strategy:
@@ -150,9 +171,14 @@ if __name__ == "__main__":
                     call = call_log_builder.build_call_log_for_given_id_or_phone_number(
                         msgdb_cursor, wadb_cursor, phone_number=ph_no
                     )
+                    call_logs_to_txt_formatted(
+                        call_log=call, dir=output_call_logs_directory
+                    )
+
     elif args.backup_output_style == "json":
         close_db_connections([msgdb, wadb])
         raise NotImplementedError
+
     else:
         close_db_connections([msgdb, wadb])
         raise Exception("Invalid 'chat formatting' requested")
