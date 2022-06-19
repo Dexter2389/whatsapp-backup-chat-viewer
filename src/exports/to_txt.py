@@ -1,7 +1,7 @@
-import datetime
+from datetime import datetime
 from typing import Callable, Generator, List
 
-from ..models import CallLog, Chat, Message
+from ..models import CallLog, Chat, Contact, GroupName, Message
 
 
 def chats_to_txt_raw(chat: Chat, dir: str) -> None:
@@ -14,9 +14,20 @@ def chats_to_txt_raw(chat: Chat, dir: str) -> None:
     Returns:
         None: Creates .txt file of the chat in the given directory
     """
+
+    if isinstance(chat.chat_title, Contact):
+        if chat.chat_title.name and chat.chat_title.number:
+            chat_title_details = f"{chat.chat_title.name} ({chat.chat_title.number})"
+        else:
+            chat_title_details = f"+{chat.chat_title.raw_string_jid.split('@')[0]}"
+    elif isinstance(chat.chat_title, GroupName):
+        chat_title_details = f"{chat.chat_title.name}"
+    else:
+        chat_title_details = ""
+
     messages = "\n".join([str(message) for message in chat.messages])
-    with open(f"{dir}/{chat.chat_title.name}-raw.txt", "w") as file:
-        file.write(f"{chat.chat_title.name}\n\n{messages}")
+    with open(f"{dir}/{chat_title_details}-raw.txt", "w") as file:
+        file.write(f"{chat_title_details}\n\n{messages}")
 
 
 def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
@@ -69,7 +80,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
                 yield ct
 
     for idx, message in enumerate(chat.messages):
-        date_time = datetime.datetime.fromtimestamp(int(message.timestamp) / 1000)
+        date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
         if (
             not message.text_data
             and not message.reply_to
@@ -124,9 +135,19 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
 
         message_list.append(message_str)
 
+    if isinstance(chat.chat_title, Contact):
+        if chat.chat_title.name and chat.chat_title.number:
+            chat_title_details = f"{chat.chat_title.name} ({chat.chat_title.number})"
+        else:
+            chat_title_details = f"+{chat.chat_title.raw_string_jid.split('@')[0]}"
+    elif isinstance(chat.chat_title, GroupName):
+        chat_title_details = f"{chat.chat_title.name}"
+    else:
+        chat_title_details = ""
+
     messages = "\n".join(message_list)
-    with open(f"{dir}/{chat.chat_title.name}.txt", "w") as file:
-        file.write(f"{chat.chat_title.name}\n\n{messages}")
+    with open(f"{dir}/{chat_title_details}.txt", "w") as file:
+        file.write(f"{chat_title_details}\n\n{messages}")
 
 
 def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
@@ -161,27 +182,47 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
     """
     call_log_list = []
 
-    for call in call_log.calls:
-        date_time = datetime.datetime.fromtimestamp(int(call.timestamp) / 1000)
+    def seconds_to_hms(duration_in_sec: int) -> str:
+        """Convert seconds to hours, minutes and seconds for better representation.
 
-        if call_log.caller_id.name and call_log.caller_id.number:
-            caller_id_details = (
-                f"{call_log.caller_id.name} ({call_log.caller_id.number})"
-            )
+        Args:
+            duration_in_sec (int): duration in seconds
+
+        Returns:
+            str: Either hours, minutes or seconds based on the converted duration.
+        """
+        hours = (duration_in_sec // 3600) % 24
+        minutes = (duration_in_sec // 60) % 60
+        seconds = duration_in_sec % 60
+
+        if hours != 0:
+            return f"{hours:02d}:{minutes:02d}:{seconds:02d} hours"
+        elif minutes != 0:
+            return f"{minutes:02d}:{seconds:02d} minutes"
         else:
-            caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
+            return f"{seconds:02d} seconds"
+
+    if call_log.caller_id.name and call_log.caller_id.number:
+        caller_id_details = f"{call_log.caller_id.name} ({call_log.caller_id.number})"
+    else:
+        caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
+
+    for call in call_log.calls:
+        date_time = datetime.fromtimestamp(int(call.timestamp) / 1000).strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )
 
         if call.from_me:
             call_log_str = (
-                f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {datetime.timedelta(seconds=call.duration)} hours\n\t>>> Status: {call.call_result}"
+                f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
                 if call.video_call
-                else f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {datetime.timedelta(seconds=call.duration)} hours\n\t>>> Status: {call.call_result}"
+                else f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
             )
         else:
             call_log_str = (
-                f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {datetime.timedelta(seconds=call.duration)} hours\n\t>>> Status: {call.call_result}"
+                f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
                 if call.video_call
-                else f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {datetime.timedelta(seconds=call.duration)} hours\n\t>>> Status: {call.call_result}"
+                else f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
             )
 
         call_log_list.append(call_log_str)
