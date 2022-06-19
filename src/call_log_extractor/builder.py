@@ -10,14 +10,14 @@ from .resolver import call_jid_resolver, call_resolver
 def build_call_for_given_id(
     msgdb_cursor: sqlite3.Cursor, call_row_id: int
 ) -> Union[Call, None]:
-    """_summary_
+    """Extract call details for a given call_row_id.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): _description_
-        call_row_id (int): _description_
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        call_row_id (int): ID of the call to extract.
 
     Returns:
-        Call: _description_
+        Call: Call details for the given call_row_id.
     """
     call_details = call_resolver(msgdb_cursor, call_row_id)
 
@@ -33,16 +33,16 @@ def build_call_log_for_given_id_or_phone_number(
     jid_row_id: int = None,
     phone_number: str = None,
 ) -> Union[CallLog, None]:
-    """_summary_
+    """Extract all call_logs (if available) for a given jid_row_id or phone_number.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): _description_
-        wadb_cursor (sqlite3.Cursor): _description_
-        jid_row_id (int, optional): _description_. Defaults to None.
-        phone_number (str, optional): _description_. Defaults to None.
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
+        jid_row_id (int, optional): jid of the call_log to extract. Defaults to None.
+        phone_number (str, optional): Phone Number of the person you want to extract the call_logs of. Defaults to None.
 
-    Raises:
-        Exception: _description_
+    Returns:
+        CallLog: CallLog object corresponding to the given jid_row_id or phone_number.
     """
     if jid_row_id:
         call_log, raw_string_jid = call_jid_resolver(
@@ -75,15 +75,15 @@ def build_call_log_for_given_id_or_phone_number(
 
 def build_all_call_logs(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
-) -> List[CallLog]:
-    """_summary_
+) -> Union[List[CallLog], None]:
+    """Extract all call_logs in the msgdb database.
 
     Args:
-        msgdb_cursor (sqlite3.Cursor): _description_
-        wadb_cursor (sqlite3.Cursor): _description_
+        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
+        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
 
     Returns:
-        List[CallLog]: _description_
+        List[CallLog]: All the call_logs in the msgdb database.
     """
     query = "SELECT jid._id FROM 'jid'"
     exec = msgdb_cursor.execute(query)

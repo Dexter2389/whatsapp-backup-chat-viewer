@@ -1,6 +1,6 @@
 import sqlite3
 from itertools import chain
-from typing import List
+from typing import List, Union
 
 from ..common import contact_resolver
 from ..models import Chat, Contact, GeoPosition, GroupName, Media, Message
@@ -59,7 +59,7 @@ def build_chat_for_given_id_or_phone_number(
     wadb_cursor: sqlite3.Cursor,
     chat_row_id: int = None,
     phone_number: str = None,
-) -> Chat:
+) -> Union[Chat, None]:
     """Extract all the messages and media (if available) for a given chat_row_id or phone_number.
 
     Args:
@@ -107,7 +107,7 @@ def build_chat_for_given_id_or_phone_number(
 
 def build_all_chats(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
-) -> List[Chat]:
+) -> Union[List[Chat], None]:
     """Extract all chats in the msgdb database.
 
     Args:
