@@ -1,6 +1,6 @@
 import sqlite3
 from itertools import chain
-from typing import List, Union
+from typing import Generator, Union
 
 from ..common import contact_resolver
 from ..models import Call, CallLog, Contact
@@ -75,7 +75,7 @@ def build_call_log_for_given_id_or_phone_number(
 
 def build_all_call_logs(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
-) -> Union[List[CallLog], None]:
+) -> Generator[CallLog, None, None]:
     """Extract all call_logs in the msgdb database.
 
     Args:
@@ -90,11 +90,10 @@ def build_all_call_logs(
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:
         return None
-    call_logs = []
+
     for jid_row_id in sorted(res_query):
         call_log = build_call_log_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, wadb_cursor=wadb_cursor, jid_row_id=jid_row_id
         )
         if call_log.calls:
-            call_logs.append(call_log)
-    return call_logs
+            yield call_log

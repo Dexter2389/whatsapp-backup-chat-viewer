@@ -1,6 +1,6 @@
 import sqlite3
 from itertools import chain
-from typing import List, Union
+from typing import Generator, Union
 
 from ..common import contact_resolver
 from ..models import Chat, Contact, GeoPosition, GroupName, Media, Message
@@ -107,14 +107,14 @@ def build_chat_for_given_id_or_phone_number(
 
 def build_all_chats(
     msgdb_cursor: sqlite3.Cursor, wadb_cursor: sqlite3.Cursor
-) -> Union[List[Chat], None]:
+) -> Generator[Chat, None, None]:
     """Extract all chats in the msgdb database.
 
     Args:
         msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
         wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
 
-    Returns:
+    Yields:
         List[Chat]: All the chats in the msgdb database.
     """
     query = "SELECT chat._id FROM 'chat'"
@@ -122,10 +122,8 @@ def build_all_chats(
     res_query = list(chain.from_iterable(exec.fetchall()))
     if res_query is None:
         return None
-    chats = [
-        build_chat_for_given_id_or_phone_number(
+
+    for chat_id in res_query:
+        yield build_chat_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, wadb_cursor=wadb_cursor, chat_row_id=chat_id
         )
-        for chat_id in res_query
-    ]
-    return chats

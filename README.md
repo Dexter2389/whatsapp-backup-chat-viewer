@@ -45,7 +45,53 @@ $ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.
 
 <!-- ## Retrieving WhatsApp Databases
 
-For retrieving the WhatsApp database files from an Android device there are several options.
+### From Android
+
+If you have an Android phone, your WhatsApp database is stored in a location of the filesystem with restricted access, which makes it bit difficult to extract your databases. Following are the few steps that can help you extract your databases from your Android Phone.
+
+1. Install [`adb`](https://www.xda-developers.com/install-adb-windows-macos-linux/) on your machine.
+2. Now, connect your mobile phone with a USB cable and put your phone in MTP mode.
+3. Based on your preferences, you can choose any one of the following:
+
+   1. With [rooted phone](https://en.wikipedia.org/wiki/Rooting_%28Android%29)
+
+      - In case you have your phone rooted, you can use the following commands to copy all your WhatsApp files to the local directory.
+
+        ```
+        $ mkdir whatsapp_backup
+        $ adb pull /data/data/com.whatsapp/ whatsapp_backup/
+        ```
+
+   2. Without rooted phone
+
+      - If you don't wish to root your phone, you can follow these steps to copy all your WhatsApp files to the local directory:
+      - Backup all your whatsapp chats by clicking `Backup Now` in settings.
+      - Download enhanced whatsapp app.
+        ```
+        $ mkdir tmp
+        $ curl -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk
+        ```
+      - Uninstall existing whatsapp app and install the enhanced app.
+        ```
+        $ adb shell pm uninstall -k com.whatsapp
+        $ adb install -r -d tmp/EnhancedWhatsApp.apk
+        ```
+      - Open the enhanced app and restore your whatsapp account. Remember to restore your chats from your previously created backups (either from Google Drive or from local backup).
+      - After the restore process has finished, run the following command:
+        ```
+        $ mkdir whatsapp_backup
+        $ adb shell 'run-as com.fwhatsapp tar cf - /data/data/com.fwhatsapp/' | tar xvf -
+        ```
+      - Once we have copied all the files, delete the enhanced whatsapp app.
+      - (Optional) Reinstall the regular whatsapp app again from the App Store.
+
+4. The required files are located in the following paths:
+
+   - whatsapp_backup/files/key
+   - whatsapp_backup/databases/msgstore.db
+   - whatsapp_backup/databases/wa.db
+
+### From an iPhone
 
 (This section will be updated soon.) -->
 
