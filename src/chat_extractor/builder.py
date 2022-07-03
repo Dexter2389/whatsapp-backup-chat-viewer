@@ -17,13 +17,15 @@ def build_message_for_given_id(
 ) -> Message:
     """Extract text message, media (if available) and location (if available) for a given message_id.
 
+    It takes a message id, and returns a Message object
+
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
-        message_id (int): ID of the message to extract.
+        msgdb_cursor (sqlite3.Cursor): The cursor for the 'msgdb' database.
+        wadb_cursor (sqlite3.Cursor): The cursor for the 'wadb.db' database.
+        message_id (int): The message id of the message you want to extract.
 
     Returns:
-        Message: Message corresponding to the given message_id.
+        A Message object corresponding to the given message_id.
     """
     message, raw_string_jid = message_resolver(
         msgdb_cursor=msgdb_cursor, message_row_id=message_id
@@ -62,9 +64,11 @@ def build_chat_for_given_id_or_phone_number(
 ) -> Union[Chat, None]:
     """Extract all the messages and media (if available) for a given chat_row_id or phone_number.
 
+    It takes a chat_row_id or phone_number and returns a Chat object.
+
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
+        msgdb_cursor (sqlite3.Cursor): The cursor for the 'msgdb' database.
+        wadb_cursor (sqlite3.Cursor): The cursor for the 'wadb' database.
         chat_row_id (int): ID of the chat to extract. Defaults to None.
         phone_number (str): Phone Number of the person you want to extract the chats of. Defaults to None.
 
@@ -110,12 +114,15 @@ def build_all_chats(
 ) -> Generator[Chat, None, None]:
     """Extract all chats in the msgdb database.
 
+    It takes a cursor to the message database and a cursor to the wa database, and returns a generator
+    that yields a chat object for each chat in the message database.
+
     Args:
-        msgdb_cursor (sqlite3.Cursor): 'msgdb' cursor.
-        wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
+        msgdb_cursor (sqlite3.Cursor): The cursor for the 'msgdb' database.
+        wadb_cursor (sqlite3.Cursor): The cursor for the 'wadb' database.
 
     Yields:
-        List[Chat]: All the chats in the msgdb database.
+        A generator of Chat objects.
     """
     query = "SELECT chat._id FROM 'chat'"
     exec = msgdb_cursor.execute(query)

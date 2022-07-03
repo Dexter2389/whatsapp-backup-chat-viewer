@@ -14,11 +14,29 @@ from src.exports.to_txt import (
 
 
 def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
+    """Create a database connection and return it.
+
+    The function takes a single argument, `file_path`, which is a string. The function returns a tuple
+    of two items: a `sqlite3.Connection` object and a `sqlite3.Cursor` object
+
+    Args:
+      file_path (str): The path to the database file.
+
+    Returns:
+      A tuple of the connection and cursor objects.
+    """
     db = sqlite3.connect(file_path)
     return db, db.cursor()
 
 
 def close_db_connections(databases: List[sqlite3.Connection]) -> None:
+    """Close all the database connections in the list of database connections.
+
+    The function takes a list of database connections and closes them all.
+
+    Args:
+      databases (List[sqlite3.Connection]): A list of sqlite3.Connection objects.
+    """
     for db in databases:
         db.close()
 
