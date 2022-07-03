@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 from src.call_log_extractor import builder as call_log_builder
 from src.chat_extractor import builder as chat_builder
+from src.exports.to_json import call_logs_to_json, chats_to_json
 from src.exports.to_txt import (
     call_logs_to_txt_formatted,
     call_logs_to_txt_raw,
@@ -194,8 +195,49 @@ if __name__ == "__main__":
                     )
 
     elif args.backup_output_style == "json":
-        close_db_connections([msgdb, wadb])
-        raise NotImplementedError
+        if args.backup_specific_or_all_chat_call == "all":
+            if "chats" in args.backup_strategy:
+                output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                if not os.path.exists(output_chat_directory):
+                    os.makedirs(output_chat_directory)
+                chats = chat_builder.build_all_chats(msgdb_cursor, wadb_cursor)
+                for chat in chats:
+                    chats_to_json(
+                        chat=chat,
+                        dir=output_chat_directory,
+                    )
+            if "call_logs" in args.backup_strategy:
+                output_call_logs_directory = (
+                    args.parsed_backup_output_dir + "/call_logs"
+                )
+                if not os.path.exists(output_call_logs_directory):
+                    os.makedirs(output_call_logs_directory)
+                calls = call_log_builder.build_all_call_logs(msgdb_cursor, wadb_cursor)
+                for call in calls:
+                    call_logs_to_json(call_log=call, dir=output_call_logs_directory)
+        else:
+            for ph_no in args.backup_specific_or_all_chat_call:
+                if "chats" in args.backup_strategy:
+                    output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                    if not os.path.exists(output_chat_directory):
+                        os.makedirs(output_chat_directory)
+                    chat = chat_builder.build_chat_for_given_id_or_phone_number(
+                        msgdb_cursor, wadb_cursor, phone_number=ph_no
+                    )
+                    chats_to_json(
+                        chat=chat,
+                        dir=output_chat_directory,
+                    )
+                if "call_logs" in args.backup_strategy:
+                    output_call_logs_directory = (
+                        args.parsed_backup_output_dir + "/call_logs"
+                    )
+                    if not os.path.exists(output_call_logs_directory):
+                        os.makedirs(output_call_logs_directory)
+                    call = call_log_builder.build_call_log_for_given_id_or_phone_number(
+                        msgdb_cursor, wadb_cursor, phone_number=ph_no
+                    )
+                    call_logs_to_json(call_log=call, dir=output_call_logs_directory)
 
     else:
         close_db_connections([msgdb, wadb])
