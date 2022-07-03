@@ -101,4 +101,4 @@ This project is licensed under the [BSD-2-Clause License](./LICENSE.md)
 
 ## Disclaimer
 
-This project is not endorsed or certified by WhatsApp Inc. and is meant for personal and educational purposes only. I don't take any responsibility for what you do with this program.
+This project is not endorsed or certified by WhatsApp Inc. and is meant for personal and educational purposes only. I don't take any not responsible, and expressly disclaims all liability for damages of any kind arising from the use, reference or reliance on the software. The information provided by the software is not guaranteed to be correct, complete and up-to-date.
