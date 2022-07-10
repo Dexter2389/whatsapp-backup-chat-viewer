@@ -1,4 +1,5 @@
 language: python
+dist: focal
 python:
   - "3.7"
   - "3.8"
@@ -8,7 +9,7 @@ env:
   - CODECOV_TOKEN=$CODECOV_TOKEN
 before_install:
   - python -m pip install --upgrade pip
-  - pip install poetry, codecov
+  - pip install poetry codecov
   - poetry config virtualenvs.create false
 install:
   - poetry install
