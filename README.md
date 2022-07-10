@@ -1,6 +1,9 @@
 # Whatsapp Backup Chat Viewer
 
-<!-- Add `badges` here-->
+![python-version](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)
+[![unit tests](https://github.com/Dexter2389/whatsapp-backup-chat-viewer/actions/workflows/tests-ci.yml/badge.svg?event=push)](https://github.com/Dexter2389/whatsapp-backup-chat-viewer/actions/workflows/tests-ci.yml)
+[![codecov](https://codecov.io/gh/Dexter2389/whatsapp-backup-chat-viewer/branch/main/graph/badge.svg?token=ZJANW7L9Y4)](https://codecov.io/gh/Dexter2389/whatsapp-backup-chat-viewer)
+![license](https://img.shields.io/badge/license-BSD--2--Clause-brightgreen)
 
 A Project to extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files.
 
