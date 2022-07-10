@@ -3,28 +3,31 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Bug Summary**
+Summary.
 
-**To Reproduce**
-Steps to reproduce the behaviour:
-1.
-2.
+**Expected Result**
 
-**Expected behaviour**
-A clear and concise description of what you expected to happen.
+What you expected.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Actual Result**
 
-**Setup DETAILS (please complete the following information):**
- - OS: [e.g. Linux, MacOS]
- - Python Version [e.g. python 3.9, python 3.10]
- - Version [e.g. 22]
+What happened instead.
 
-**Additional context**
-Add any other context about the problem here.
+**Reproduction Steps**
+
+```python
+
+```
+
+**System Information**
+
+```
+<paste here>
+```
+
+Please provide some basic information about your system (Python version,
+operating system, etc.).
