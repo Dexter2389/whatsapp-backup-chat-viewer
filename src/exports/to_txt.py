@@ -208,24 +208,25 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
         caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
 
     for call in call_log.calls:
-        date_time = datetime.fromtimestamp(int(call.timestamp) / 1000).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
-
-        if call.from_me:
-            call_log_str = (
-                f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
-                if call.video_call
-                else f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
-            )
-        else:
-            call_log_str = (
-                f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
-                if call.video_call
-                else f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
+        if call:
+            date_time = datetime.fromtimestamp(int(call.timestamp) / 1000).strftime(
+                "%Y-%m-%d %H:%M:%S"
             )
 
-        call_log_list.append(call_log_str)
+            if call.from_me:
+                call_log_str = (
+                    f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
+                    if call.video_call
+                    else f"[{date_time}]: Me ----> {caller_id_details}\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
+                )
+            else:
+                call_log_str = (
+                    f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📹 - Video Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
+                    if call.video_call
+                    else f"[{date_time}]: {caller_id_details} ----> Me\n\t>>> Call Type: 📞 - Voice Call\n\t>>> Duration: {seconds_to_hms(duration_in_sec=call.duration)}\n\t>>> Status: {call.call_result}"
+                )
+
+            call_log_list.append(call_log_str)
 
     call_logs = "\n".join(call_log_list)
     with open(f"{dir}/{caller_id_details}.txt", "w") as file:

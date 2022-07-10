@@ -109,7 +109,7 @@ Before you begin, ensure you have met the following requirements:
    ```
 4. (Optional) Feel free to give the repository's testing suite a shot:
    ```shell
-   $ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml tests/
+   $ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml --basetemp=tests/unit/tmp tests/
    ```
 
 You are now all set to contribute to this project.

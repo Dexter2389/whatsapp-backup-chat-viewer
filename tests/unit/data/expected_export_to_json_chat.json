@@ -1,0 +1,67 @@
+{
+    "chat_id": 533,
+    "chat_title": {
+        "name": null,
+        "number": "+997863428668",
+        "raw_string_jid": "997863428668@s.whatsapp.net"
+    },
+    "messages": [
+        {
+            "chat_id": 533,
+            "from_me": 1,
+            "geo_position": null,
+            "key_id": "6BE2CB39DE7CE864C49F28F6B11EAD05",
+            "media": {
+                "file_path": "Media/WhatsApp Images/Sent/IMG-20181127-WA0025.jpg",
+                "media_job_uuid": "fbc84a18-aacf-4bbe-a736-a968e5ca82e5",
+                "message_id": 158352,
+                "mime_type": ""
+            },
+            "message_id": 158352,
+            "reply_to": null,
+            "sender_contact": {
+                "name": null,
+                "number": "+997863428668",
+                "raw_string_jid": "997863428668@s.whatsapp.net"
+            },
+            "text_data": "Nulla scelerisque leo augue, sit amet ullamcorper est aliquet sed!! 😂",
+            "timestamp": 1543317689901
+        },
+        {
+            "chat_id": 533,
+            "from_me": 1,
+            "geo_position": null,
+            "key_id": "FBCEBE15C475DCE9F74087D8735CABB0",
+            "media": null,
+            "message_id": 158353,
+            "reply_to": null,
+            "sender_contact": {
+                "name": null,
+                "number": "+997863428668",
+                "raw_string_jid": "997863428668@s.whatsapp.net"
+            },
+            "text_data": "Fusce mollis libero!!",
+            "timestamp": 1543317698865
+        },
+        {
+            "chat_id": 456,
+            "from_me": 1,
+            "geo_position": {
+                "latitude": 65.754409,
+                "longitude": -168.924534,
+                "message_id": 158394
+            },
+            "key_id": "3D15299A2A6B62DBC5BEC42E42C9E48A",
+            "media": null,
+            "message_id": 158394,
+            "reply_to": "6BE2CB39DE7CE864C49F28F6B11EAD05",
+            "sender_contact": {
+                "name": null,
+                "number": "+997863428668",
+                "raw_string_jid": "997863428668@s.whatsapp.net"
+            },
+            "text_data": "",
+            "timestamp": 1580132486421
+        }
+    ]
+}
