@@ -121,7 +121,7 @@ def build_all_chats(
         msgdb_cursor (sqlite3.Cursor): The cursor for the 'msgdb' database.
         wadb_cursor (sqlite3.Cursor): The cursor for the 'wadb' database.
 
-    Yields:
+    Return:
         A generator of Chat objects.
     """
     query = "SELECT chat._id FROM 'chat'"
@@ -130,7 +130,9 @@ def build_all_chats(
     if res_query is None:
         return None
 
-    for chat_id in res_query:
-        yield build_chat_for_given_id_or_phone_number(
+    return (
+        build_chat_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, wadb_cursor=wadb_cursor, chat_row_id=chat_id
         )
+        for chat_id in res_query
+    )

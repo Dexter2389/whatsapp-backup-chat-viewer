@@ -75,9 +75,9 @@ def test_build_all_chats():
     wadb = sqlite3.connect("tests/unit/data/test_wa.db")
     wadb_cursor = wadb.cursor()
 
-    assert (
-        builder.build_all_chats(msgdb_cursor, wadb_cursor) == expected_build_all_chats
-    )
+    assert [
+        chat for chat in builder.build_all_chats(msgdb_cursor, wadb_cursor)
+    ] == expected_build_all_chats
 
     msgdb.close()
     wadb.close()
