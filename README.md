@@ -14,8 +14,8 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 
 ### Features
 
-- Export the chats to txt files (one per chat).
-<!-- - Export the chats to JSON file. -->
+- Export the chats to txt files.
+- Export the chats to JSON files.
 
 ## Usage
 
@@ -32,16 +32,6 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 ```shell
 $ python main.py -mdb msgstore.db -wdb wa.db -o output
 ```
-
-<!-- ## Development
-
-To run unit test:
-
-```shell
-$ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml tests
-```
-
-(This section will be updated soon.) -->
 
 <!-- ## Retrieving WhatsApp Databases
 
@@ -94,6 +84,35 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
 ### From an iPhone
 
 (This section will be updated soon.) -->
+
+## Development
+
+Before you begin, ensure you have met the following requirements:
+
+- `Python` (version 3.8 or higher) installed.
+- [`Poetry`](https://python-poetry.org/docs/master/#installing-with-the-official-installer) is installed.
+
+1. Now that you have met the requirements, clone this repository locally:
+
+   ```shell
+   $ git clone https://github.com/Dexter2389/whatsapp-backup-chat-viewer.git
+   $ cd whatsapp-backup-chat-viewer
+   ```
+
+2. Once you have a copy of the source, install the project dependencies:
+   ```shell
+   $ poetry install
+   ```
+3. Enable `pre-commit`.
+   ```shell
+   $ pre-commit install
+   ```
+4. (Optional) Feel free to give the repository's testing suite a shot:
+   ```shell
+   $ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml tests/
+   ```
+
+You are now all set to contribute to this project.
 
 ## License
 

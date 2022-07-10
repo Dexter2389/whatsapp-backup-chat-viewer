@@ -72,10 +72,11 @@ def test_build_all_chats():
     wadb = sqlite3.connect("tests/unit/data/test_wa.db")
     wadb_cursor = wadb.cursor()
 
-    assert (
-        builder.build_all_call_logs(msgdb_cursor, wadb_cursor)
-        == expected_build_all_call_logs
-    )
+    assert [
+        call_log
+        for call_log in builder.build_all_call_logs(msgdb_cursor, wadb_cursor)
+        if call_log.calls
+    ] == expected_build_all_call_logs
 
     msgdb.close()
     wadb.close()

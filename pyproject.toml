@@ -18,6 +18,7 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.8"
 attrs = "^21.4.0"
+tqdm = "^4.64.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"

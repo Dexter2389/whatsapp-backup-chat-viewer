@@ -83,7 +83,7 @@ def build_all_call_logs(
         wadb_cursor (sqlite3.Cursor): 'wadb' cursor.
 
     Returns:
-        List[CallLog]: All the call_logs in the msgdb database.
+        A generator of CallLog objects
     """
     query = "SELECT jid._id FROM 'jid'"
     exec = msgdb_cursor.execute(query)
@@ -91,9 +91,9 @@ def build_all_call_logs(
     if res_query is None:
         return None
 
-    for jid_row_id in sorted(res_query):
-        call_log = build_call_log_for_given_id_or_phone_number(
+    return (
+        build_call_log_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, wadb_cursor=wadb_cursor, jid_row_id=jid_row_id
         )
-        if call_log.calls:
-            yield call_log
+        for jid_row_id in sorted(res_query)
+    )
