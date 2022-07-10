@@ -1,0 +1,48 @@
+name: Format, Lint and Code Complexity Check 
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: format-and-lint-check
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10']
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Environment setup and Dependency install
+        run: |
+          echo "Updating pip and installing poetry"
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry config virtualenvs.create false
+
+      - name: Code Format checks
+        run: |
+          echo "Running Code Formatting checks"
+          poetry run pip install black isort radon
+          echo "Performing 'black' formatting check"
+          poetry run black src tests main.py --check
+          echo "Performing 'isort' check"
+          poetry run isort --profile black --check src tests main.py
+          echo "Performing 'code_complexity' checks"
+          poetry run radon cc src -a -nc
+          echo "Done"
+      
+      - name: Lint checks
+        run: |
+          echo "Running Lint checks"
+          poetry run pip install flake8
+          poetry run flake8 --max-line-length=88 --ignore=E203,E501,W503 src tests main.py
+          echo "Done"
