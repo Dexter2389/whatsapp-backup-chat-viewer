@@ -22,7 +22,6 @@ jobs:
 
       - name: Environment setup and Install dependencies
         run: |
-          export TZ="Asia/Kolkata"
           python -m pip install --upgrade pip
           pip install codecov poetry
           poetry config virtualenvs.create false
@@ -30,6 +29,7 @@ jobs:
       
       - name: Unit tests
         run: |
+          export TZ="Asia/Kolkata"
           poetry run pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=junit/report.xml --basetemp=tests/unit/tmp tests/
       
       - name: Report coverage
