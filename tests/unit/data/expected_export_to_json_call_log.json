@@ -1,0 +1,27 @@
+{
+    "caller_id": {
+        "name": "Izebel Bengtsdotter",
+        "number": "+669233817152",
+        "raw_string_jid": "669233817152@s.whatsapp.net"
+    },
+    "calls": [
+        {
+            "call_result": 4,
+            "call_row_id": 929,
+            "duration": 0,
+            "from_me": 1,
+            "timestamp": 1545829680246,
+            "video_call": 0
+        },
+        {
+            "call_result": 2,
+            "call_row_id": 2909,
+            "duration": 72,
+            "from_me": 0,
+            "timestamp": 1568973142212,
+            "video_call": 0
+        },
+        null
+    ],
+    "jid_row_id": 16
+}
