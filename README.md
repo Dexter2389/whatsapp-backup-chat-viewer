@@ -65,7 +65,7 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
         ```
         $ mkdir tmp
         $ cd tmp
-        $ curl -o tmp/EnhancedWhatsApp.apk https://github.com/Dexter2389/whatsapp-backup-chat-viewer/blob/main/assets/EnhancedWhatsApp.apk
+        $ curl -o tmp/EnhancedWhatsApp.apk https://github.com/Dexter2389/whatsapp-backup-chat-viewer/raw/main/assets/EnhancedWhatsApp.apk
         ```
 
         <!-- $ curl -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk -->
