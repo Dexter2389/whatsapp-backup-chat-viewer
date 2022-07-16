@@ -32,6 +32,7 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 
 ### Quickstart:
 
+- Ensure `Python` (version 3.8 or higher) is installed.
 - Run the main script:
 
 ```shell
