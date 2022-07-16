@@ -142,8 +142,8 @@ cython_debug/
 .DS_Store
 .vscode
 output/
-wa.db
-msgstore.db
+wa_*.db
+msgstore_*.db
 TODO.md
 test_locally.py
 tests/unit/tmp/*

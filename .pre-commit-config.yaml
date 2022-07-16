@@ -15,13 +15,6 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
-      - id: radon
-        name: radon check
-        description: Perform `radon` complexity check and apply if necessary.
-        entry: poetry run radon cc src -a
-        language: system
-        always_run: true
-        pass_filenames: false
       - id: flake8
         name: flake8
         description: Perform flake8 linting checks.

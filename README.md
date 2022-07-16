@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/Dexter2389/whatsapp-backup-chat-viewer/branch/main/graph/badge.svg?token=ZJANW7L9Y4)](https://codecov.io/gh/Dexter2389/whatsapp-backup-chat-viewer)
 ![license](https://img.shields.io/badge/license-BSD--2--Clause-brightgreen)
 
-A Project to extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files.
+Extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files.
 
 <!-- Add TXT Output -->
 
@@ -24,19 +24,21 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 
 ### Prerequisites:
 
+- WhatsApp Versions supported currently:
+  - 2.21.24.22
 - [Whatsapp Database file](#retrieving-whatsapp-databases)
   - msgstore.db
   - wa.db
 
 ### Quickstart:
 
-- Run the following script:
+- Run the main script:
 
 ```shell
 $ python main.py -mdb msgstore.db -wdb wa.db -o output
 ```
 
-<!-- ## Retrieving WhatsApp Databases
+## Retrieving WhatsApp Databases
 
 ### From Android
 
@@ -47,23 +49,27 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
 3. Based on your preferences, you can choose any one of the following:
 
    1. With [rooted phone](https://en.wikipedia.org/wiki/Rooting_%28Android%29)
+      In case you have your phone rooted, you can use the following commands to copy all your WhatsApp files to the local directory.
 
-      - In case you have your phone rooted, you can use the following commands to copy all your WhatsApp files to the local directory.
-
-        ```
-        $ mkdir whatsapp_backup
-        $ adb pull /data/data/com.whatsapp/ whatsapp_backup/
-        ```
+      ```
+      $ mkdir whatsapp_backup
+      $ adb pull /data/data/com.whatsapp/ whatsapp_backup/
+      ```
 
    2. Without rooted phone
+      If you don't wish to root your phone, you can follow these steps to copy all your WhatsApp files to the local directory:
 
-      - If you don't wish to root your phone, you can follow these steps to copy all your WhatsApp files to the local directory:
       - Backup all your whatsapp chats by clicking `Backup Now` in settings.
       - Download enhanced whatsapp app.
+
         ```
         $ mkdir tmp
-        $ curl -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk
+        $ cd tmp
+        $ curl -o tmp/EnhancedWhatsApp.apk https://github.com/Dexter2389/whatsapp-backup-chat-viewer/blob/main/assets/EnhancedWhatsApp.apk
         ```
+
+        <!-- $ curl -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk -->
+
       - Uninstall existing whatsapp app and install the enhanced app.
         ```
         $ adb shell pm uninstall -k com.whatsapp
@@ -72,8 +78,10 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
       - Open the enhanced app and restore your whatsapp account. Remember to restore your chats from your previously created backups (either from Google Drive or from local backup).
       - After the restore process has finished, run the following command:
         ```
-        $ mkdir whatsapp_backup
+        $ mkdir -p whatsapp_backup/databases whatsapp_backup/files
         $ adb shell 'run-as com.fwhatsapp tar cf - /data/data/com.fwhatsapp/' | tar xvf -
+        $ cp data/data/com.fwhatsapp/databases/msgstore.db data/data/com.fwhatsapp/databases/wa.db whatsapp_backup/databases/
+        $ cp data/data/com.fwhatsapp/files/key whatsapp_backup/files/
         ```
       - Once we have copied all the files, delete the enhanced whatsapp app.
       - (Optional) Reinstall the regular whatsapp app again from the App Store.
@@ -84,7 +92,7 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
    - whatsapp_backup/databases/msgstore.db
    - whatsapp_backup/databases/wa.db
 
-### From an iPhone
+<!-- ### From an iPhone
 
 (This section will be updated soon.) -->
 

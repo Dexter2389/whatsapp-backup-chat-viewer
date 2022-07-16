@@ -32,13 +32,11 @@ jobs:
         continue-on-error: true
         run: |
           echo "Running Code Formatting checks"
-          poetry run pip install black isort radon
+          poetry run pip install black isort
           echo "Performing 'black' formatting check"
           poetry run black src tests main.py --check
           echo "Performing 'isort' check"
           poetry run isort --profile black --check src tests main.py
-          echo "Performing 'code_complexity' checks"
-          poetry run radon cc src -a -nc
           echo "Done"
       
       - name: Lint checks
