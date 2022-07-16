@@ -125,6 +125,11 @@ Before you begin, ensure you have met the following requirements:
 
 You are now all set to contribute to this project.
 
+<!-- ## Future Scope
+
+- Add User Interface
+- Add Chat Analytics [Examples: (https://github.com/MaartenGr/soan), (https://github.com/joweich/chat-miner), (https://github.com/irfanchahyadi/Whatsapp-Chat-Analyzer)] -->
+
 ## License
 
 This project is licensed under the [BSD-2-Clause License](./LICENSE.md)
