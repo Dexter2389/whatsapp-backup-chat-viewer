@@ -7,9 +7,17 @@
 
 Extract Whatsapp conversations from the app's SQLite database and exporting them as JSON or TXT files.
 
-<!-- Add TXT Output -->
+#### TXT Export Output
 
-<!-- Add JSON Output -->
+|                   Chat Text Output                    |                   Call Text Output                    |
+| :---------------------------------------------------: | :---------------------------------------------------: |
+| ![txt_chat_example](./assets/to_txt_chat_example.png) | ![txt_call_example](./assets/to_txt_call_example.png) |
+
+#### JSON Export Output
+
+|                    Chat JSON Output                    |                    Call JSON Output                    |
+| :----------------------------------------------------: | :----------------------------------------------------: |
+| ![txt_chat_example](./assets/to_json_chat_example.png) | ![txt_call_example](./assets/to_json_call_example.png) |
 
 ### Motivation
 
