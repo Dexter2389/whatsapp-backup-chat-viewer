@@ -26,7 +26,7 @@ def chats_to_txt_raw(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join([str(message) for message in chat.messages])
-    with open(f"{dir}/{chat_title_details}-raw.txt", "w") as file:
+    with open(f"{dir}/{chat_title_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
@@ -146,7 +146,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join(message_list)
-    with open(f"{dir}/{chat_title_details}.txt", "w") as file:
+    with open(f"{dir}/{chat_title_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
@@ -166,7 +166,7 @@ def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
         caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
 
     call_logs = "\n".join([str(call) for call in call_log.calls])
-    with open(f"{dir}/{caller_id_details}-raw.txt", "w") as file:
+    with open(f"{dir}/{caller_id_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")
 
 
@@ -229,5 +229,5 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
             call_log_list.append(call_log_str)
 
     call_logs = "\n".join(call_log_list)
-    with open(f"{dir}/{caller_id_details}.txt", "w") as file:
+    with open(f"{dir}/{caller_id_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")
