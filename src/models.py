@@ -48,7 +48,7 @@ class Message(object):
     chat_id: str  # Which chat does this message belong to. Resolved from `message.chat_row_id`.
     from_me: int  # Whether this message is sent by me or not. Resolved from `message.from_me -> bool`.
     sender_contact: Optional[Contact]
-    timestamp: datetime  # When was this message sent. Resolved from `message.received_timestamp`.
+    timestamp: int  # When was this message sent. Resolved from `message.received_timestamp`.
     text_data: Optional[
         str
     ]  # The actual text message. Resolved from `message.text_data`.
