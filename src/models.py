@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List, Optional, Union
 
 from attrs import define
@@ -68,7 +67,7 @@ class Chat(object):
 class Call(object):
     call_row_id: int  # Call row ID. Resolved from `call_log._id`.
     from_me: int  # Whether this call was made by me or not. Resolved from `call_log.from_me -> bool`.
-    timestamp: datetime  # When was this call made. Resolved from `call_log.timestamp`.
+    timestamp: int  # When was this call made. Resolved from `call_log.timestamp`.
     video_call: int  # Whether this call was a video call or not. Resolved from `call_log.video_call -> bool`.
     duration: int  # Duration of the call. Resolved from `call_log.duration`.
     call_result: int
