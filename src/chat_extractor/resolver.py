@@ -2,7 +2,7 @@ import sqlite3
 from typing import Any, Dict, Tuple, Union
 
 
-def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[str, Any]:
+def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[str, Any] | None:
     """Fetch media related data for a given message_id from the msgdb.
 
     Args:
@@ -23,7 +23,7 @@ def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[st
 
 def geo_position_resolver(
     msgdb_cursor: sqlite3.Cursor, message_row_id: int
-) -> Dict[str, Any]:
+) -> Dict[str, Any] | None:
     """Fetch geo-position related data for a given message_id from the msgdb.
 
     Args:
