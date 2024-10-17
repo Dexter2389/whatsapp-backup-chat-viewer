@@ -102,7 +102,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
             if message.reply_to:
                 orig_message = next(
                     find_reply(
-                        lambda x: message.reply_to == x.key_id,
+                        lambda x, msg=message: msg.reply_to == x.key_id,
                         chat.messages[:idx],
                     ),
                     None,
