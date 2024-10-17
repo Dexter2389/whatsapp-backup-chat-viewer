@@ -5,7 +5,7 @@ from attrs import asdict
 from ..models import CallLog, Chat, Contact, GroupName
 
 
-def chats_to_json(chat: Chat, dir: str) -> None:
+def chats_to_json(chat: Chat, folder: str) -> None:
     """Store chat as a JSON file.
 
     It takes a chat object and a directory, and writes a json file to the directory with the chat's
@@ -13,7 +13,7 @@ def chats_to_json(chat: Chat, dir: str) -> None:
 
     Args:
         chat (Chat): Chat - the chat object to be converted to JSON
-        dir (str): The directory to save the chats to.
+        folder (str): The directory to save the chats to.
 
     Returns:
         None: Creates .json file of the chat in the given directory
@@ -28,11 +28,11 @@ def chats_to_json(chat: Chat, dir: str) -> None:
     else:
         chat_title_details = ""
 
-    with open(f"{dir}/{chat_title_details}.json", "w", encoding="utf8") as file:
+    with open(f"{folder}/{chat_title_details}.json", "w", encoding="utf8") as file:
         json.dump(asdict(chat), file, sort_keys=True, indent=4, ensure_ascii=False)
 
 
-def call_logs_to_json(call_log: CallLog, dir: str) -> None:
+def call_logs_to_json(call_log: CallLog, folder: str) -> None:
     """Store call logs as a JSON file.
 
     It takes a `CallLog` object and a directory path, and writes a JSON file to the directory with the
@@ -40,7 +40,7 @@ def call_logs_to_json(call_log: CallLog, dir: str) -> None:
 
     Args:
         call_log (CallLog): CallLog - The call log object to be converted to JSON.
-        dir (str): The directory where the JSON files will be saved.
+        folder (str): The directory where the JSON files will be saved.
 
     Returns:
         None: Creates .json file of the chat in the given directory
@@ -50,5 +50,5 @@ def call_logs_to_json(call_log: CallLog, dir: str) -> None:
     else:
         caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
 
-    with open(f"{dir}/{caller_id_details}.json", "w", encoding="utf8") as file:
+    with open(f"{folder}/{caller_id_details}.json", "w", encoding="utf8") as file:
         json.dump(asdict(call_log), file, sort_keys=True, indent=4, ensure_ascii=False)
