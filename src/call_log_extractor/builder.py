@@ -61,8 +61,8 @@ def build_call_log_for_given_id_or_phone_number(
     call_log["caller_id"] = Contact(raw_string_jid=raw_string_jid, **dm_or_group)
 
     query = f"""SELECT call_log._id FROM 'call_log' WHERE call_log.jid_row_id={call_log.get("jid_row_id")}"""
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
     call_log["calls"] = [
         build_call_for_given_id(msgdb_cursor, call_row_id)
         for call_row_id in sorted(res_query)
@@ -84,8 +84,8 @@ def build_all_call_logs(
         A generator of CallLog objects
     """
     query = "SELECT jid._id FROM 'jid'"
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
 
     return (
         build_call_log_for_given_id_or_phone_number(

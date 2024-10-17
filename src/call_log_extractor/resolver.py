@@ -16,11 +16,11 @@ def call_resolver(msgdb_cursor: sqlite3.Cursor, call_row_id: int) -> Dict[str, A
     SELECT call_log._id as call_row_id, call_log.from_me, call_log.timestamp, call_log.video_call, call_log.duration, call_log.call_result
     FROM 'call_log'
     WHERE call_log._id={call_row_id}"""
-    exec = msgdb_cursor.execute(msgdb_query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(msgdb_query)
+    res_query = execution.fetchone()
     if res_query is None:
         return None
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     return res
 
 
@@ -53,13 +53,13 @@ def call_jid_resolver(
     else:
         raise AssertionError("'jid_row_id' and 'phone_number' both cannot be None")
 
-    exec = msgdb_cursor.execute(msgdb_query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(msgdb_query)
+    res_query = execution.fetchone()
     if res_query is None:
         res_query = [
             None,
             None,
         ]  # Need some better logic to resolve when we don't have a contact in msgdb.db
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid

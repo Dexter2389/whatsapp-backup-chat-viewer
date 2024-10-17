@@ -13,11 +13,11 @@ def media_resolver(msgdb_cursor: sqlite3.Cursor, message_row_id: int) -> Dict[st
         Dict[str, Any]: Dictionary containing 'message_id', 'media_job_uuid', 'file_path' and 'mime_type' keys.
     """
     query = f"SELECT message_media.message_row_id as message_id, message_media.media_job_uuid, message_media.file_path, message_media.mime_type FROM message_media WHERE message_media.message_row_id='{message_row_id}'"
-    exec = msgdb_cursor.execute(query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(query)
+    res_query = execution.fetchone()
     if res_query is None:
         return None
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     return res
 
 
@@ -34,11 +34,11 @@ def geo_position_resolver(
         Dict[str, Any]: Dictionary containing 'message_id', 'latitude' and 'longitude' keys.
     """
     query = f"SELECT message_location.message_row_id as message_id, message_location.latitude, message_location.longitude FROM message_location WHERE message_location.message_row_id='{message_row_id}'"
-    exec = msgdb_cursor.execute(query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(query)
+    res_query = execution.fetchone()
     if res_query is None:
         return None
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     return res
 
 
@@ -63,14 +63,14 @@ def message_resolver(
     WHERE message._id={message_row_id}
     """
 
-    exec = msgdb_cursor.execute(query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(query)
+    res_query = execution.fetchone()
     if res_query is None:
         res_query = [
             None,
             None,
         ]
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
 
@@ -106,13 +106,13 @@ def chat_resolver(
     else:
         raise AssertionError("'chat_row_id' and 'phone_number' both cannot be None")
 
-    exec = msgdb_cursor.execute(msgdb_query)
-    res_query = exec.fetchone()
+    execution = msgdb_cursor.execute(msgdb_query)
+    res_query = execution.fetchone()
     if res_query is None:
         res_query = [
             None,
             None,
         ]  # Need some better logic to resolve when we don't have a contact in msgdb.db
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     raw_string_jid = res.pop("raw_string_jid")
     return res, raw_string_jid
