@@ -58,7 +58,7 @@ class Message(object):
 
 @define
 class Chat(object):
-    chat_id: str  # Chat ID. Resolved from `chat._id`.
+    chat_id: int  # Chat ID. Resolved from `chat._id`.
     chat_title: Optional[Union[Contact, GroupName]]  # Chat title.
     messages: List[Optional[Message]]
 
