@@ -104,7 +104,7 @@ def chat_resolver(
         JOIN 'jid' ON chat.jid_row_id=jid._id
         WHERE jid.raw_string LIKE '%{phone_number}@%'"""
     else:
-        raise Exception("'chat_row_id' and 'phone_number' both cannot be None")
+        raise AssertionError("'chat_row_id' and 'phone_number' both cannot be None")
 
     exec = msgdb_cursor.execute(msgdb_query)
     res_query = exec.fetchone()

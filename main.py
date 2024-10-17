@@ -261,6 +261,6 @@ if __name__ == "__main__":
 
     else:
         close_db_connections([msgdb, wadb])
-        raise Exception("Invalid 'chat formatting' requested")
+        raise AssertionError("Invalid 'chat formatting' requested")
 
     close_db_connections([msgdb, wadb])

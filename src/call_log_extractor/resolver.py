@@ -51,7 +51,7 @@ def call_jid_resolver(
         FROM 'jid'
         WHERE jid.raw_string LIKE '%{phone_number}@%'"""
     else:
-        raise Exception("'jid_row_id' and 'phone_number' both cannot be None")
+        raise AssertionError("'jid_row_id' and 'phone_number' both cannot be None")
 
     exec = msgdb_cursor.execute(msgdb_query)
     res_query = exec.fetchone()

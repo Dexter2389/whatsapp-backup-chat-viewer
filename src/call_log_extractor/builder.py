@@ -53,7 +53,7 @@ def build_call_log_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, phone_number=phone_number
         )
     else:
-        raise Exception("'jid_row_id' and 'phone_number' cannot both be None")
+        raise AssertionError("'jid_row_id' and 'phone_number' cannot both be None")
 
     dm_or_group = contact_resolver(
         wadb_cursor=wadb_cursor, raw_string_jid=raw_string_jid
