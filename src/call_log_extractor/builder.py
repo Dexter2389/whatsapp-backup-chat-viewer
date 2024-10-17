@@ -63,8 +63,6 @@ def build_call_log_for_given_id_or_phone_number(
     query = f"""SELECT call_log._id FROM 'call_log' WHERE call_log.jid_row_id={call_log.get("jid_row_id")}"""
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
     call_log["calls"] = [
         build_call_for_given_id(msgdb_cursor, call_row_id)
         for call_row_id in sorted(res_query)
@@ -88,8 +86,6 @@ def build_all_call_logs(
     query = "SELECT jid._id FROM 'jid'"
     exec = msgdb_cursor.execute(query)
     res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
 
     return (
         build_call_log_for_given_id_or_phone_number(
