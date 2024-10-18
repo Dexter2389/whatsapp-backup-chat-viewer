@@ -53,7 +53,7 @@ class Message(object):
     ]  # The actual text message. Resolved from `message.text_data`.
     media: Optional[Media]
     geo_position: Optional[GeoPosition]
-    reply_to: str  # If a reply, it is a reply to which message. Resolved from `message._id -> message_quoted.message_row_id -> message_quoted.key_id`
+    reply_to: str| None  # If a reply, it is a reply to which message. Resolved from `message._id -> message_quoted.message_row_id -> message_quoted.key_id`
 
 
 @define
