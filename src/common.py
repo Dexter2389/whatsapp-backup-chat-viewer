@@ -17,14 +17,14 @@ def contact_resolver(
     query = f"""
     SELECT wa_contacts.display_name as name, wa_contacts.number FROM 'wa_contacts' WHERE wa_contacts.jid="{raw_string_jid}"
     """
-    exec = wadb_cursor.execute(query)
-    res_query = exec.fetchone()
+    execution = wadb_cursor.execute(query)
+    res_query = execution.fetchone()
     if res_query is None:
         res_query = [
             None,
             None,
         ]  # Need some better logic to resolve when we don't have a contact in wa.db
-    res = dict(zip([col[0] for col in exec.description], res_query))
+    res = dict(zip([col[0] for col in execution.description], res_query))
     if res.get("name"):
         if "/" in res["name"]:
             res["name"] = res.get("name").replace("/", "_")
