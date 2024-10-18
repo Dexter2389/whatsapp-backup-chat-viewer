@@ -71,7 +71,7 @@ def test_call_jid_resolver_with_phone_number():
     msgdb = sqlite3.connect("tests/unit/data/test_msgstore.db")
     msgdb_cursor = msgdb.cursor()
 
-    phone_numbers = [979017585714, 899167416177, 885402477365]
+    phone_numbers = ["979017585714", "899167416177", "885402477365"]
     for phone_number, expected_result in zip(phone_numbers, expected_results):
         assert (
             resolver.call_jid_resolver(msgdb_cursor, phone_number=phone_number)
