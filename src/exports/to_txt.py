@@ -42,24 +42,24 @@ def chats_to_txt_formatted(chat: Chat, folder: str) -> None:
     """
     message_list = []
 
-    def resolve_sender_name(message: Message) -> str:
+    def resolve_sender_name(msg: Message) -> str:
         """Utility function to extract 'sender_name' from a given message.
 
         Args:
-            message (Message): Message from which we want to extract sender_name.
+            msg (Message): Message from which we want to extract sender_name.
 
         Returns:
             str: sender_name
         """
-        if message.from_me:
+        if msg.from_me:
             sender_name = "Me"
         else:
             sender_name = (
-                message.sender_contact.name
-                if message.sender_contact.name is not None
-                else message.sender_contact.raw_string_jid[
-                    : message.sender_contact.raw_string_jid.index("@")
-                ]
+                msg.sender_contact.name
+                if msg.sender_contact.name is not None
+                else msg.sender_contact.raw_string_jid[
+                     : msg.sender_contact.raw_string_jid.index("@")
+                     ]
             )
         return sender_name
 
@@ -90,7 +90,7 @@ def chats_to_txt_formatted(chat: Chat, folder: str) -> None:
             # If there is no data or media or reply_to, we can assume that the message was about change in chat settings.
             message_str = f"[{date_time}] 'Change in the chat settings'"
         else:
-            sender_name = resolve_sender_name(message=message)
+            sender_name = resolve_sender_name(msg=message)
 
             message_str = (
                 f"[{date_time}]: {sender_name} - {message.text_data}"
