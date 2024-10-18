@@ -4,12 +4,12 @@ from typing import Callable, Generator, List
 from ..models import CallLog, Chat, Contact, GroupName, Message
 
 
-def chats_to_txt_raw(chat: Chat, dir: str) -> None:
+def chats_to_txt_raw(chat: Chat, folder: str) -> None:
     """Store chat messages in a text file without formatting.
 
     Args:
         chat (Chat): Chat to be formatted.
-        dir (str): Directory to write the formatted chat.
+        folder (str): Directory to write the formatted chat.
 
     Returns:
         None: Creates .txt file of the chat in the given directory
@@ -26,16 +26,16 @@ def chats_to_txt_raw(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join([str(message) for message in chat.messages])
-    with open(f"{dir}/{chat_title_details}-raw.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{chat_title_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
-def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
+def chats_to_txt_formatted(chat: Chat, folder: str) -> None:
     """Format chat messages in a readable format and store them as a text file.
 
     Args:
         chat (Chat): Chat to be formatted.
-        dir (str): Directory to write the formatted chat.
+        folder (str): Directory to write the formatted chat.
 
     Returns:
         None: Creates .txt file of the chat in the given directory
@@ -146,16 +146,16 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join(message_list)
-    with open(f"{dir}/{chat_title_details}.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{chat_title_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
-def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
+def call_logs_to_txt_raw(call_log: CallLog, folder: str) -> None:
     """Store call logs in a text file without formatting.
 
     Args:
         call_log (CallLog): CallLog to be formatted.
-        dir (str): Directory to write the formatted call log.
+        folder (str): Directory to write the formatted call log.
 
     Returns:
         None: Creates .txt file of the call log in the given directory.
@@ -166,16 +166,16 @@ def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
         caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
 
     call_logs = "\n".join([str(call) for call in call_log.calls])
-    with open(f"{dir}/{caller_id_details}-raw.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{caller_id_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")
 
 
-def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
+def call_logs_to_txt_formatted(call_log: CallLog, folder: str) -> None:
     """Format call logs in a readable format and store them as a text file.
 
     Args:
         call_log (CallLog): CallLog to be formatted.
-        dir (str): Directory to write the formatted call log.
+        folder (str): Directory to write the formatted call log.
 
     Returns:
         None: Creates .txt file of the call log in the given directory.
@@ -229,5 +229,5 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
             call_log_list.append(call_log_str)
 
     call_logs = "\n".join(call_log_list)
-    with open(f"{dir}/{caller_id_details}.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{caller_id_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")

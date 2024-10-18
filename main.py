@@ -107,7 +107,7 @@ if __name__ == "__main__":
                 for chat in tqdm(chats):
                     chats_to_txt_raw(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
             if "call_logs" in args.backup_strategy:
                 output_call_logs_directory = (
@@ -121,7 +121,7 @@ if __name__ == "__main__":
                 for call_log in tqdm(call_logs):
                     if call_log.calls:
                         call_logs_to_txt_raw(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
         else:
             for ph_no in tqdm(args.backup_specific_or_all_chat_call):
@@ -134,7 +134,7 @@ if __name__ == "__main__":
                     )
                     chats_to_txt_raw(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
                 if "call_logs" in args.backup_strategy:
                     output_call_logs_directory = (
@@ -149,7 +149,7 @@ if __name__ == "__main__":
                     )
                     if call_log.calls:
                         call_logs_to_txt_raw(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
 
     elif args.backup_output_style == "formatted_txt":
@@ -162,7 +162,7 @@ if __name__ == "__main__":
                 for chat in tqdm(chats):
                     chats_to_txt_formatted(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
             if "call_logs" in args.backup_strategy:
                 output_call_logs_directory = (
@@ -176,7 +176,7 @@ if __name__ == "__main__":
                 for call_log in tqdm(call_logs):
                     if call_log.calls:
                         call_logs_to_txt_formatted(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
         else:
             for ph_no in tqdm(args.backup_specific_or_all_chat_call):
@@ -189,7 +189,7 @@ if __name__ == "__main__":
                     )
                     chats_to_txt_formatted(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
                 if "call_logs" in args.backup_strategy:
                     output_call_logs_directory = (
@@ -204,7 +204,7 @@ if __name__ == "__main__":
                     )
                     if call_log.calls:
                         call_logs_to_txt_formatted(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
 
     elif args.backup_output_style == "json":
