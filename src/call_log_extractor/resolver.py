@@ -2,7 +2,7 @@ import sqlite3
 from typing import Any, Dict, Tuple, Union
 
 
-def call_resolver(msgdb_cursor: sqlite3.Cursor, call_row_id: int) -> Dict[str, Any]:
+def call_resolver(msgdb_cursor: sqlite3.Cursor, call_row_id: int) -> Dict[str, Any] | None:
     """Fetch call data for a given call_row_id from the msgdb.
 
     Args:
