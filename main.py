@@ -83,7 +83,7 @@ if __name__ == "__main__":
         "--backup_specific_or_all_chat_call",
         "-e",
         nargs="*",
-        default="all",
+        default=["all"],
         help="Phone numbers (format: XXXXXXXXXXXX) of the chats and/or call logs that you want to extract from the database",
     )
     args = ap.parse_args()
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     )
 
     if args.backup_output_style == "raw_txt":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
                 output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
@@ -153,7 +153,7 @@ if __name__ == "__main__":
                         )
 
     elif args.backup_output_style == "formatted_txt":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
                 output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
@@ -208,7 +208,7 @@ if __name__ == "__main__":
                         )
 
     elif args.backup_output_style == "json":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
                 output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
