@@ -44,7 +44,7 @@ class GeoPosition(object):
 class Message(object):
     message_id: int  # Message ID. Resolved from `message._id`.
     key_id: str  # Key ID. Resolved from `message.key_id`.
-    chat_id: str  # Which chat does this message belong to. Resolved from `message.chat_row_id`.
+    chat_id: int  # Which chat does this message belong to. Resolved from `message.chat_row_id`.
     from_me: int  # Whether this message is sent by me or not. Resolved from `message.from_me -> bool`.
     sender_contact: Optional[Contact]
     timestamp: int  # When was this message sent. Resolved from `message.received_timestamp`.
