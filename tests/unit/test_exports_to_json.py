@@ -75,7 +75,7 @@ def test_export_chats_to_json(tmp_path):
 
     test_chat_dir = tmp_path / "chats"
     test_chat_dir.mkdir()
-    to_json.chats_to_json(chat=test_chat, dir=f"{test_chat_dir}")
+    to_json.chats_to_json(chat=test_chat, folder=f"{test_chat_dir}")
 
     with open(
         f"{test_chat_dir}/+{test_chat.chat_title.raw_string_jid.split('@')[0]}.json",
@@ -126,7 +126,7 @@ def test_export_call_logs_to_json(tmp_path):
 
     test_call_log_dir = tmp_path / "call_logs"
     test_call_log_dir.mkdir()
-    to_json.call_logs_to_json(call_log=test_call_log, dir=f"{test_call_log_dir}")
+    to_json.call_logs_to_json(call_log=test_call_log, folder=f"{test_call_log_dir}")
 
     with open(
         f"{test_call_log_dir}/{test_call_log.caller_id.name} ({test_call_log.caller_id.number}).json",

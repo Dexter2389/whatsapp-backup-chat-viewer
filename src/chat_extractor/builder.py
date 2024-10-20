@@ -84,7 +84,7 @@ def build_chat_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, phone_number=phone_number
         )
     else:
-        raise Exception("'chat_row_id' and 'phone_number' both cannot be None")
+        raise AssertionError("'chat_row_id' and 'phone_number' both cannot be None")
 
     dm_or_group = contact_resolver(
         wadb_cursor=wadb_cursor, raw_string_jid=raw_string_jid
@@ -97,10 +97,8 @@ def build_chat_for_given_id_or_phone_number(
         )
 
     query = f"""SELECT message._id FROM 'message' WHERE message.chat_row_id={chat.get("chat_id")}"""
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
     chat["messages"] = [
         build_message_for_given_id(msgdb_cursor, wadb_cursor, message_id)
         for message_id in res_query
@@ -125,10 +123,8 @@ def build_all_chats(
         A generator of Chat objects.
     """
     query = "SELECT chat._id FROM 'chat'"
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
 
     return (
         build_chat_for_given_id_or_phone_number(

@@ -24,7 +24,7 @@ def build_call_for_given_id(
     if call_details:
         return Call(**call_details)
     else:
-        None
+        return None
 
 
 def build_call_log_for_given_id_or_phone_number(
@@ -53,7 +53,7 @@ def build_call_log_for_given_id_or_phone_number(
             msgdb_cursor=msgdb_cursor, phone_number=phone_number
         )
     else:
-        raise Exception("'jid_row_id' and 'phone_number' both cannot be None")
+        raise AssertionError("'jid_row_id' and 'phone_number' cannot both be None")
 
     dm_or_group = contact_resolver(
         wadb_cursor=wadb_cursor, raw_string_jid=raw_string_jid
@@ -61,10 +61,8 @@ def build_call_log_for_given_id_or_phone_number(
     call_log["caller_id"] = Contact(raw_string_jid=raw_string_jid, **dm_or_group)
 
     query = f"""SELECT call_log._id FROM 'call_log' WHERE call_log.jid_row_id={call_log.get("jid_row_id")}"""
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
     call_log["calls"] = [
         build_call_for_given_id(msgdb_cursor, call_row_id)
         for call_row_id in sorted(res_query)
@@ -86,10 +84,8 @@ def build_all_call_logs(
         A generator of CallLog objects
     """
     query = "SELECT jid._id FROM 'jid'"
-    exec = msgdb_cursor.execute(query)
-    res_query = list(chain.from_iterable(exec.fetchall()))
-    if res_query is None:
-        return None
+    execution = msgdb_cursor.execute(query)
+    res_query = list(chain.from_iterable(execution.fetchall()))
 
     return (
         build_call_log_for_given_id_or_phone_number(

@@ -4,12 +4,12 @@ from typing import Callable, Generator, List
 from ..models import CallLog, Chat, Contact, GroupName, Message
 
 
-def chats_to_txt_raw(chat: Chat, dir: str) -> None:
+def chats_to_txt_raw(chat: Chat, folder: str) -> None:
     """Store chat messages in a text file without formatting.
 
     Args:
         chat (Chat): Chat to be formatted.
-        dir (str): Directory to write the formatted chat.
+        folder (str): Directory to write the formatted chat.
 
     Returns:
         None: Creates .txt file of the chat in the given directory
@@ -26,40 +26,40 @@ def chats_to_txt_raw(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join([str(message) for message in chat.messages])
-    with open(f"{dir}/{chat_title_details}-raw.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{chat_title_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
-def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
+def chats_to_txt_formatted(chat: Chat, folder: str) -> None:
     """Format chat messages in a readable format and store them as a text file.
 
     Args:
         chat (Chat): Chat to be formatted.
-        dir (str): Directory to write the formatted chat.
+        folder (str): Directory to write the formatted chat.
 
     Returns:
         None: Creates .txt file of the chat in the given directory
     """
     message_list = []
 
-    def resolve_sender_name(message: Message) -> str:
+    def resolve_sender_name(msg: Message) -> str:
         """Utility function to extract 'sender_name' from a given message.
 
         Args:
-            message (Message): Message from which we want to extract sender_name.
+            msg (Message): Message from which we want to extract sender_name.
 
         Returns:
             str: sender_name
         """
-        if message.from_me:
+        if msg.from_me:
             sender_name = "Me"
         else:
             sender_name = (
-                message.sender_contact.name
-                if message.sender_contact.name is not None
-                else message.sender_contact.raw_string_jid[
-                    : message.sender_contact.raw_string_jid.index("@")
-                ]
+                msg.sender_contact.name
+                if msg.sender_contact.name is not None
+                else msg.sender_contact.raw_string_jid[
+                     : msg.sender_contact.raw_string_jid.index("@")
+                     ]
             )
         return sender_name
 
@@ -90,7 +90,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
             # If there is no data or media or reply_to, we can assume that the message was about change in chat settings.
             message_str = f"[{date_time}] 'Change in the chat settings'"
         else:
-            sender_name = resolve_sender_name(message=message)
+            sender_name = resolve_sender_name(msg=message)
 
             message_str = (
                 f"[{date_time}]: {sender_name} - {message.text_data}"
@@ -102,7 +102,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
             if message.reply_to:
                 orig_message = next(
                     find_reply(
-                        lambda x: message.reply_to == x.key_id,
+                        lambda x, msg=message: msg.reply_to == x.key_id,
                         chat.messages[:idx],
                     ),
                     None,
@@ -146,16 +146,16 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
         chat_title_details = ""
 
     messages = "\n".join(message_list)
-    with open(f"{dir}/{chat_title_details}.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{chat_title_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{chat_title_details}\n\n{messages}")
 
 
-def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
+def call_logs_to_txt_raw(call_log: CallLog, folder: str) -> None:
     """Store call logs in a text file without formatting.
 
     Args:
         call_log (CallLog): CallLog to be formatted.
-        dir (str): Directory to write the formatted call log.
+        folder (str): Directory to write the formatted call log.
 
     Returns:
         None: Creates .txt file of the call log in the given directory.
@@ -166,16 +166,16 @@ def call_logs_to_txt_raw(call_log: CallLog, dir: str) -> None:
         caller_id_details = f"+{call_log.caller_id.raw_string_jid.split('@')[0]}"
 
     call_logs = "\n".join([str(call) for call in call_log.calls])
-    with open(f"{dir}/{caller_id_details}-raw.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{caller_id_details}-raw.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")
 
 
-def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
+def call_logs_to_txt_formatted(call_log: CallLog, folder: str) -> None:
     """Format call logs in a readable format and store them as a text file.
 
     Args:
         call_log (CallLog): CallLog to be formatted.
-        dir (str): Directory to write the formatted call log.
+        folder (str): Directory to write the formatted call log.
 
     Returns:
         None: Creates .txt file of the call log in the given directory.
@@ -229,5 +229,5 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
             call_log_list.append(call_log_str)
 
     call_logs = "\n".join(call_log_list)
-    with open(f"{dir}/{caller_id_details}.txt", "w", encoding="utf-8") as file:
+    with open(f"{folder}/{caller_id_details}.txt", "w", encoding="utf-8") as file:
         file.write(f"{caller_id_details}\n\n{call_logs}")
