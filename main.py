@@ -15,6 +15,9 @@ from src.exports.to_txt import (
     chats_to_txt_raw,
 )
 
+CALL_LOGS_DIR = "/call_logs"
+CHAT_DIR = "/chats"
+
 
 def create_db_connection(file_path: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     """Create a database connection and return it.
@@ -80,7 +83,7 @@ if __name__ == "__main__":
         "--backup_specific_or_all_chat_call",
         "-e",
         nargs="*",
-        default="all",
+        default=["all"],
         help="Phone numbers (format: XXXXXXXXXXXX) of the chats and/or call logs that you want to extract from the database",
     )
     args = ap.parse_args()
@@ -95,20 +98,20 @@ if __name__ == "__main__":
     )
 
     if args.backup_output_style == "raw_txt":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
-                output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
                     os.makedirs(output_chat_directory)
                 chats = chat_builder.build_all_chats(msgdb_cursor, wadb_cursor)
                 for chat in tqdm(chats):
                     chats_to_txt_raw(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
             if "call_logs" in args.backup_strategy:
                 output_call_logs_directory = (
-                    args.parsed_backup_output_dir + "/call_logs"
+                        args.parsed_backup_output_dir + CALL_LOGS_DIR
                 )
                 if not os.path.exists(output_call_logs_directory):
                     os.makedirs(output_call_logs_directory)
@@ -118,12 +121,12 @@ if __name__ == "__main__":
                 for call_log in tqdm(call_logs):
                     if call_log.calls:
                         call_logs_to_txt_raw(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
         else:
             for ph_no in tqdm(args.backup_specific_or_all_chat_call):
                 if "chats" in args.backup_strategy:
-                    output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                    output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                     if not os.path.exists(output_chat_directory):
                         os.makedirs(output_chat_directory)
                     chat = chat_builder.build_chat_for_given_id_or_phone_number(
@@ -131,11 +134,11 @@ if __name__ == "__main__":
                     )
                     chats_to_txt_raw(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
                 if "call_logs" in args.backup_strategy:
                     output_call_logs_directory = (
-                        args.parsed_backup_output_dir + "/call_logs"
+                            args.parsed_backup_output_dir + CALL_LOGS_DIR
                     )
                     if not os.path.exists(output_call_logs_directory):
                         os.makedirs(output_call_logs_directory)
@@ -146,24 +149,24 @@ if __name__ == "__main__":
                     )
                     if call_log.calls:
                         call_logs_to_txt_raw(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
 
     elif args.backup_output_style == "formatted_txt":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
-                output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
                     os.makedirs(output_chat_directory)
                 chats = chat_builder.build_all_chats(msgdb_cursor, wadb_cursor)
                 for chat in tqdm(chats):
                     chats_to_txt_formatted(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
             if "call_logs" in args.backup_strategy:
                 output_call_logs_directory = (
-                    args.parsed_backup_output_dir + "/call_logs"
+                        args.parsed_backup_output_dir + CALL_LOGS_DIR
                 )
                 if not os.path.exists(output_call_logs_directory):
                     os.makedirs(output_call_logs_directory)
@@ -173,12 +176,12 @@ if __name__ == "__main__":
                 for call_log in tqdm(call_logs):
                     if call_log.calls:
                         call_logs_to_txt_formatted(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
         else:
             for ph_no in tqdm(args.backup_specific_or_all_chat_call):
                 if "chats" in args.backup_strategy:
-                    output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                    output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                     if not os.path.exists(output_chat_directory):
                         os.makedirs(output_chat_directory)
                     chat = chat_builder.build_chat_for_given_id_or_phone_number(
@@ -186,11 +189,11 @@ if __name__ == "__main__":
                     )
                     chats_to_txt_formatted(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
                 if "call_logs" in args.backup_strategy:
                     output_call_logs_directory = (
-                        args.parsed_backup_output_dir + "/call_logs"
+                            args.parsed_backup_output_dir + CALL_LOGS_DIR
                     )
                     if not os.path.exists(output_call_logs_directory):
                         os.makedirs(output_call_logs_directory)
@@ -201,24 +204,24 @@ if __name__ == "__main__":
                     )
                     if call_log.calls:
                         call_logs_to_txt_formatted(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
 
     elif args.backup_output_style == "json":
-        if args.backup_specific_or_all_chat_call == "all":
+        if args.backup_specific_or_all_chat_call == ["all"]:
             if "chats" in args.backup_strategy:
-                output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                 if not os.path.exists(output_chat_directory):
                     os.makedirs(output_chat_directory)
                 chats = chat_builder.build_all_chats(msgdb_cursor, wadb_cursor)
                 for chat in tqdm(chats):
                     chats_to_json(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
             if "call_logs" in args.backup_strategy:
                 output_call_logs_directory = (
-                    args.parsed_backup_output_dir + "/call_logs"
+                        args.parsed_backup_output_dir + CALL_LOGS_DIR
                 )
                 if not os.path.exists(output_call_logs_directory):
                     os.makedirs(output_call_logs_directory)
@@ -228,12 +231,12 @@ if __name__ == "__main__":
                 for call_log in tqdm(call_logs):
                     if call_log.calls:
                         call_logs_to_json(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
         else:
             for ph_no in tqdm(args.backup_specific_or_all_chat_call):
                 if "chats" in args.backup_strategy:
-                    output_chat_directory = args.parsed_backup_output_dir + "/chats"
+                    output_chat_directory = args.parsed_backup_output_dir + CHAT_DIR
                     if not os.path.exists(output_chat_directory):
                         os.makedirs(output_chat_directory)
                     chat = chat_builder.build_chat_for_given_id_or_phone_number(
@@ -241,11 +244,11 @@ if __name__ == "__main__":
                     )
                     chats_to_json(
                         chat=chat,
-                        dir=output_chat_directory,
+                        folder=output_chat_directory,
                     )
                 if "call_logs" in args.backup_strategy:
                     output_call_logs_directory = (
-                        args.parsed_backup_output_dir + "/call_logs"
+                            args.parsed_backup_output_dir + CALL_LOGS_DIR
                     )
                     if not os.path.exists(output_call_logs_directory):
                         os.makedirs(output_call_logs_directory)
@@ -256,11 +259,11 @@ if __name__ == "__main__":
                     )
                     if call_log.calls:
                         call_logs_to_json(
-                            call_log=call_log, dir=output_call_logs_directory
+                            call_log=call_log, folder=output_call_logs_directory
                         )
 
     else:
         close_db_connections([msgdb, wadb])
-        raise Exception("Invalid 'chat formatting' requested")
+        raise AssertionError("Invalid 'chat formatting' requested")
 
     close_db_connections([msgdb, wadb])

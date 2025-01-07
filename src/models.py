@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import List, Optional, Union
 
 from attrs import define
@@ -45,21 +44,21 @@ class GeoPosition(object):
 class Message(object):
     message_id: int  # Message ID. Resolved from `message._id`.
     key_id: str  # Key ID. Resolved from `message.key_id`.
-    chat_id: str  # Which chat does this message belong to. Resolved from `message.chat_row_id`.
+    chat_id: int  # Which chat does this message belong to. Resolved from `message.chat_row_id`.
     from_me: int  # Whether this message is sent by me or not. Resolved from `message.from_me -> bool`.
     sender_contact: Optional[Contact]
-    timestamp: datetime  # When was this message sent. Resolved from `message.received_timestamp`.
+    timestamp: int  # When was this message sent. Resolved from `message.received_timestamp`.
     text_data: Optional[
         str
     ]  # The actual text message. Resolved from `message.text_data`.
     media: Optional[Media]
     geo_position: Optional[GeoPosition]
-    reply_to: str  # If a reply, it is a reply to which message. Resolved from `message._id -> message_quoted.message_row_id -> message_quoted.key_id`
+    reply_to: str| None  # If a reply, it is a reply to which message. Resolved from `message._id -> message_quoted.message_row_id -> message_quoted.key_id`
 
 
 @define
 class Chat(object):
-    chat_id: str  # Chat ID. Resolved from `chat._id`.
+    chat_id: int  # Chat ID. Resolved from `chat._id`.
     chat_title: Optional[Union[Contact, GroupName]]  # Chat title.
     messages: List[Optional[Message]]
 
@@ -68,7 +67,7 @@ class Chat(object):
 class Call(object):
     call_row_id: int  # Call row ID. Resolved from `call_log._id`.
     from_me: int  # Whether this call was made by me or not. Resolved from `call_log.from_me -> bool`.
-    timestamp: datetime  # When was this call made. Resolved from `call_log.timestamp`.
+    timestamp: int  # When was this call made. Resolved from `call_log.timestamp`.
     video_call: int  # Whether this call was a video call or not. Resolved from `call_log.video_call -> bool`.
     duration: int  # Duration of the call. Resolved from `call_log.duration`.
     call_result: int

@@ -114,6 +114,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# IntelliJ files
+/.idea
+/*.iml
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -142,8 +146,9 @@ cython_debug/
 .DS_Store
 .vscode
 output/
-wa.db
-msgstore.db
+**/wa.db
+**/msgstore.db
 TODO.md
 test_locally.py
 tests/unit/tmp/*
+/whatsapp_backup
