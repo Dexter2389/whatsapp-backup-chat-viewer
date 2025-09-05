@@ -5,9 +5,13 @@ description = "Extract Whatsapp conversations from the app's SQLite database and
 authors = ["Saurabh Ghanekar <ghanekarsaurabh8@gmail.com>"]
 license = "BSD-2-Clause"
 readme = "README.md"
-homepage = ""
-repository = ""
-documentation = ""
+homepage = "https://github.com/Dexter2389/whatsapp-backup-chat-viewer"
+repository = "https://github.com/Dexter2389/whatsapp-backup-chat-viewer?tab=readme-ov-file"
+documentation = "https://github.com/Dexter2389/whatsapp-backup-chat-viewer?tab=readme-ov-file#usage"
+packages = [
+    { include = "src" },
+    { include = "tests" }
+]
 
 include = [
     "README.md",
@@ -20,7 +24,7 @@ python = "^3.8"
 attrs = "^21.4.0"
 tqdm = "^4.64.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 black = "^22.3.0"

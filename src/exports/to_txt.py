@@ -80,7 +80,7 @@ def chats_to_txt_formatted(chat: Chat, dir: str) -> None:
                 yield ct
 
     for idx, message in enumerate(chat.messages):
-        date_time = datetime.fromtimestamp(int(message.timestamp) / 1000)
+        date_time = datetime.utcfromtimestamp(int(message.timestamp) / 1000)
         if (
             not message.text_data
             and not message.reply_to
@@ -209,7 +209,7 @@ def call_logs_to_txt_formatted(call_log: CallLog, dir: str) -> None:
 
     for call in call_log.calls:
         if call:
-            date_time = datetime.fromtimestamp(int(call.timestamp) / 1000).strftime(
+            date_time = datetime.utcfromtimestamp(int(call.timestamp) / 1000).strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
 

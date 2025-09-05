@@ -41,11 +41,12 @@ Recently I lost my phone and as any normal person, my whatsapp contained lots of
 ### Quickstart:
 
 - Ensure `Python` (version 3.8 or higher) is installed.
+- Save or copy your WhatsApp database files (`msgstore.db` and `wa.db`) into the `db` folder in the project directory.
 - Run the main script:
 
-```shell
-$ python main.py -mdb msgstore.db -wdb wa.db -o output
-```
+  ```shell
+  python main.py -mdb db/msgstore.db -wdb db/wa.db -f json -o output
+  ```
 
 ## Retrieving WhatsApp Databases
 
@@ -57,48 +58,49 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
 2. Now, connect your mobile phone with a USB cable and put your phone in MTP mode.
 3. Based on your preferences, you can choose any one of the following:
 
-   1. With [rooted phone](https://en.wikipedia.org/wiki/Rooting_%28Android%29)
+   - With [rooted phone](https://en.wikipedia.org/wiki/Rooting_%28Android%29)
       In case you have your phone rooted, you can use the following commands to copy all your WhatsApp files to the local directory.
 
       ```
-      $ mkdir whatsapp_backup
-      $ adb pull /data/data/com.whatsapp/ whatsapp_backup/
+      mkdir whatsapp_backup
+      adb pull /data/data/com.whatsapp/ whatsapp_backup/
       ```
 
-   2. Without rooted phone
+   - Without rooted phone
       If you don't wish to root your phone, you can follow these steps to copy all your WhatsApp files to the local directory:
 
-      - Backup all your whatsapp chats by clicking `Backup Now` in settings.
-      - Download enhanced whatsapp app.
+      1. Backup all your whatsapp chats by clicking `Backup Now` in settings.
+      2. Download enhanced whatsapp app.
 
-        ```
-        $ mkdir tmp
-        $ curl -L -o tmp/EnhancedWhatsApp.apk https://github.com/Dexter2389/whatsapp-backup-chat-viewer/raw/main/assets/EnhancedWhatsApp.apk
-        ```
+         ```
+         mkdir tmp
+         curl -L -o tmp/EnhancedWhatsApp.apk https://github.com/Dexter2389/whatsapp-backup-chat-viewer/raw/main/assets/EnhancedWhatsApp.apk
+         ```
 
-        <!-- $ curl -L -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk -->
+        <!-- curl -L -o tmp/EnhancedWhatsApp.apk http://dl.imobie.com/android/specified-app.apk -->
 
-      - Uninstall existing whatsapp app and install the enhanced app.
-        ```
-        $ adb shell pm uninstall -k com.whatsapp
-        $ adb install -r -d tmp/EnhancedWhatsApp.apk
-        ```
-      - Open the enhanced app and restore your whatsapp account. Remember to restore your chats from your previously created backups (either from Google Drive or from local backup).
-      - After the restore process has finished, run the following command:
-        ```
-        $ mkdir -p whatsapp_backup/databases whatsapp_backup/files
-        $ adb shell 'run-as com.fwhatsapp tar cf - /data/data/com.fwhatsapp/' | tar xvf -
-        $ cp data/data/com.fwhatsapp/databases/msgstore.db data/data/com.fwhatsapp/databases/wa.db whatsapp_backup/databases/
-        $ cp data/data/com.fwhatsapp/files/key whatsapp_backup/files/
-        ```
-      - Once we have copied all the files, delete the enhanced whatsapp app.
-      - (Optional) Reinstall the regular whatsapp app again from the App Store.
+      3. Uninstall existing whatsapp app and install the enhanced app.
+         ```
+         adb shell pm uninstall -k com.whatsapp
+         adb install -r -d tmp/EnhancedWhatsApp.apk
+         ```
+      4. Open the enhanced app and restore your whatsapp account. Remember to restore your chats from your previously created backups (either from Google Drive or from local backup).
+      5. After the restore process has finished, run the following command:
+         ```
+         mkdir -p whatsapp_backup/databases whatsapp_backup/files
+         adb shell 'run-as com.fwhatsapp tar cf - /data/data/com.fwhatsapp/' | tar xvf -
+         cp data/data/com.fwhatsapp/databases/msgstore.db data/data/com.fwhatsapp/databases/wa.db whatsapp_backup/databases/
+         cp data/data/com.fwhatsapp/files/key whatsapp_backup/files/
+         cp data/data/com.fwhatsapp/files/encrypted_backup.key whatsapp_backup/files/
+         ```
+      6. Once we have copied all the files, delete the enhanced whatsapp app.
+      7. (Optional) Reinstall the regular whatsapp app again from the App Store.
 
 4. The required files are located in the following paths:
 
-   - whatsapp_backup/files/key
-   - whatsapp_backup/databases/msgstore.db
-   - whatsapp_backup/databases/wa.db
+   - `whatsapp_backup/files/key` or `whatsapp_backup/files/encrypted_backup.key` (crypt15/E2E encrypted backup)
+   - `whatsapp_backup/databases/msgstore.db`
+   - `whatsapp_backup/databases/wa.db`
 
 <!-- ### From an iPhone
 
@@ -109,26 +111,32 @@ If you have an Android phone, your WhatsApp database is stored in a location of 
 Before you begin, ensure you have met the following requirements:
 
 - `Python` (version 3.8 or higher) installed.
-- [`Poetry`](https://python-poetry.org/docs/master/#installing-with-the-official-installer) is installed.
+- [`Poetry`](https://python-poetry.org/docs/#installing-with-the-official-installer) and [poetry-plugin-shell](https://github.com/python-poetry/poetry-plugin-shell) is installed.
 
 1. Now that you have met the requirements, clone this repository locally:
-
    ```shell
-   $ git clone https://github.com/Dexter2389/whatsapp-backup-chat-viewer.git
-   $ cd whatsapp-backup-chat-viewer
+   git clone https://github.com/Dexter2389/whatsapp-backup-chat-viewer.git
+   cd whatsapp-backup-chat-viewer
    ```
 
 2. Once you have a copy of the source, install the project dependencies:
    ```shell
-   $ poetry install
+   poetry install
    ```
-3. Enable `pre-commit`.
+
+3. Activate the Poetry virtual environment:
    ```shell
-   $ pre-commit install
+   poetry shell
    ```
-4. (Optional) Feel free to give the repository's testing suite a shot:
+
+4. Enable `pre-commit`.
    ```shell
-   $ pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml --basetemp=tests/unit/tmp tests/
+   pre-commit install
+   ```
+
+5. (Optional) Feel free to give the repository's testing suite a shot:
+   ```shell
+   pytest --cov-report=term-missing --cov=src --cov-report=xml --junitxml=report.xml --basetemp=tests/unit/tmp tests/
    ```
 
 You are now all set to contribute to this project.
